@@ -1,0 +1,3 @@
+# Add export ANSIBLE_INVENTORY=~/Development/Ansible/ansible_hosts to .profile
+
+space ansible_port=2222 ansible_host=spacecore.rxn.be ansible_user=rien ansible_python_interpreter=/bin/python2
