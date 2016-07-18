@@ -1,0 +1,7 @@
+---
+- name: Install vsftpd
+  pacman: name=vsftpd state=present
+
+- name: Copy vsftpd configuration
+  template: src=vsftpd.conf dest=/etc/vsftpd.conf
+  notify: restart vsftpd
