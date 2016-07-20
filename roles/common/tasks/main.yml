@@ -1,0 +1,28 @@
+---
+- name: Update cache
+  pacman: update_cache = yes
+
+- name: Install packages which don't need configuration.
+  pacman: name={{ item }} state=latest
+  with_items:
+    - base-devel
+    - neovim
+    - zsh
+    - htop
+    - git
+    - speedtest-cli
+    - unzip
+    - tree
+    - wget
+    - httpie
+    - tmux
+    - dos2unix
+    - nmap
+    - python
+    - python2
+    - scp
+    - rsync
+    - screenfetch
+    - ranger
+    - ruby
+
