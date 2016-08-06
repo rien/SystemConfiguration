@@ -1,9 +1,0 @@
----
-- name: Spacecore is a droplet hosted by Digital Ocean.
-        It acts as my main webserver.
-  hosts: spacecore
-
-  roles:
-    - update
-    - vsftpd
-

@@ -1,3 +1,0 @@
----
-- name: 'System update'
-  pacman: update_cache=yes upgrade=yes

@@ -1,28 +1,38 @@
 ---
-- name: Update cache
-  pacman: update_cache = yes
+- name: Update system
+  pacman: update_cache = yes upgrade=yes
 
-- name: Install packages which don't need configuration.
+- name: Install essential packages configuration.
   pacman: name={{ item }} state=latest
   with_items:
     - base-devel
-    - neovim
-    - zsh
-    - htop
-    - git
-    - speedtest-cli
-    - unzip
-    - tree
-    - wget
-    - httpie
-    - tmux
+    - bc
     - dos2unix
+    - git
+    - hdparm
+    - htop
+    - httpie
+    - lsof
+    - neovim
     - nmap
     - python
+    - python
     - python2
-    - scp
-    - rsync
-    - screenfetch
     - ranger
+    - rbenv
+    - rsync
     - ruby
+    - scp
+    - screenfetch
+    - smartmontools
+    - speedtest-cli
+    - thefuck
+    - tmux
+    - tree
+    - unzip
+    - vpnc
+    - wget
+    - zsh
 
+- name: Symlink neovim to vim
+  src=/bin/nvim dest=/bin/vim state=link
