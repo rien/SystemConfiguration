@@ -3,7 +3,7 @@
   pacman: update_cache=yes upgrade=yes
 
 - name: Install essential packages.
-  pacman: name={{ item }} state=latest
+  pacman: name={{ item }} state=present
   with_items:
     - base-devel
     - bc
