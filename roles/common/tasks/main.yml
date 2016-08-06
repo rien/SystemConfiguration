@@ -1,6 +1,6 @@
 ---
 - name: Update system
-  pacman: update_cache = yes upgrade=yes
+  pacman: update_cache=yes upgrade=yes
 
 - name: Install essential packages configuration.
   pacman: name={{ item }} state=latest
@@ -35,4 +35,4 @@
     - zsh
 
 - name: Symlink neovim to vim
-  src=/bin/nvim dest=/bin/vim state=link
+  file: src=/bin/nvim dest=/bin/vim state=link
