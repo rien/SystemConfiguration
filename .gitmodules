@@ -1,3 +1,0 @@
-[submodule "roles/nginx"]
-	path = roles/nginx
-	url = git@github.com:R13N/ansible-role-nginx.git
