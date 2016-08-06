@@ -2,7 +2,7 @@
 - name: Update system
   pacman: update_cache=yes upgrade=yes
 
-- name: Install essential packages configuration.
+- name: Install essential packages.
   pacman: name={{ item }} state=latest
   with_items:
     - base-devel
@@ -16,13 +16,13 @@
     - neovim
     - nmap
     - python
-    - python
     - python2
     - ranger
-    - rbenv
+      #- rbenv AUR
     - rsync
     - ruby
-    - scp
+    - openssh
+    - openssl
     - screenfetch
     - smartmontools
     - speedtest-cli
