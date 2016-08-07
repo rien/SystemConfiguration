@@ -4,7 +4,8 @@
   hosts: paarthurnax
 
   roles:
-    - common
-    - vsftpd
+    #- common
+    #- vsftpd
     - nginx
+    - latexbuilder
 

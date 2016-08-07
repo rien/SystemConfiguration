@@ -1,0 +1,90 @@
+---
+- include_vars: "{{ item }}"
+  with_items:
+    - vars/secrets.yml
+    - vars/main.yml
+
+- name: Install needed packages
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - texlive-core
+    - python2-pip
+    - python2-virtualenv
+  notify: Restart latexbuilder service
+
+- name: Create latexbuilder user
+  user:
+    name: latexbuilder
+    group: http
+    home: "{{ latexbuilder_homedir }}"
+    shell: /usr/bin/nologin
+
+- name: Checkout latexbuilder code
+  git: 
+    repo: https://github.com/R13N/LatexBuilder.git
+    dest: "{{ latexbuilder_workdir }}"
+    accept_hostkey: yes
+  notify: Restart latexbuilder service
+
+- name: Make directories and set permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    owner: latexbuilder
+    group: http
+    mode: 'u=rwx,g=rx,o=r' 
+  with_items:
+    - "{{ latexbuilder_homedir }}"
+    - "{{ latexbuilder_homedir}}/.ssh"
+    - "{{ latexbuilder_workdir}}/build"
+
+- name: Copy latexbuilder ssh keys and access_codes
+  copy:
+    content: "{{ item.content }}"
+    dest: "{{ latexbuilder_homedir }}/{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  with_items: 
+    - content: "{{ latexbuilder_access_code }}"
+      dest: builder/access_codes
+      mode: "u=rw,g=,o="
+    - content: "{{ latexbuilder_id_rsa }}"
+      dest: .ssh/id_rsa
+      mode: "u=rw,g=,o="
+    - content: "{{ latexbuilder_id_rsa_pub }}"
+      dest: .ssh/id_rsa.pub
+      mode: "u=rw,g=r,o=r"
+  notify: Restart latexbuilder service
+    
+- name: Create virtualenv and install requirements
+  pip:
+    virtualenv_command: virtualenv2
+    virtualenv: "{{ latexbuilder_workdir }}/VENV"
+    requirements: "{{ latexbuilder_workdir }}/requirements.txt"
+
+- name: Copy service file
+  copy:
+    src: files/latexbuilder.service
+    dest: /usr/lib/systemd/system/latexbuilder.service
+  notify: 
+    - Reload systemd daemon
+    - Restart latexbuilder service
+
+- name: Create from ebooks.rxn.be to the build dir
+  file:
+    src: "{{ latexbuilder_workdir }}/build"
+    dest: /srv/http/ebooks/samenvattingen
+    state: link
+    owner: latexbuilder
+    group: http
+    mode: 'u=rx,g=rx,o=r'
+
+- name: Ensure the service is enabled and running.
+  service:
+    name: latexbuilder
+    enabled: yes
+    state: started
+
+

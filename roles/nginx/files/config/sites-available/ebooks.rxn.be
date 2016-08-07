@@ -9,5 +9,6 @@ server {
 
     location / {
         autoindex on;
+        disable_symlinks off;
     }
 }

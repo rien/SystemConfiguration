@@ -1,0 +1,21 @@
+[Unit]
+Description=Github LaTeX builder
+After=network.target
+
+[Service]
+Type=simple
+User=latexbuilder
+Group=http
+ExecStart=/srv/latexbuilder/builder/VENV/bin/python server.py -i 127.0.0.1 -p 9595
+WorkingDirectory=/srv/latexbuilder/builder
+ReadOnlyDirectories=/
+ReadWriteDirectories=/srv/latexbuilder/builder/
+NoNewPrivileges=true
+ProtectSystem=full
+TimeoutStartSec=2
+TimeoutStopSec=5
+Restart=on-failure
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
