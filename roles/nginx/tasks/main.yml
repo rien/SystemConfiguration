@@ -21,7 +21,7 @@
    state: link
   with_items:
     - ebooks.rxn.be
-    - latexbuilder
+  # TODO: - latexbuilder
   notify: Restart nginx
 
 - name: Ensure nginx is enabled
