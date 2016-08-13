@@ -1,0 +1,10 @@
+---
+- name: This is a droplet hosted by Digital Ocean.
+  hosts: droplet
+
+  roles:
+    #- common
+    #- vsftpd
+    - nginx
+    - latexbuilder
+
