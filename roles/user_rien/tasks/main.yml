@@ -1,0 +1,8 @@
+
+- name: Add the user 'rien'
+  user:
+    name: rien
+    comment: Rien Maertens
+    groups: systemd-journal users lp sudo admin wheel
+    createhome: yes
+    shell: /bin/zsh
