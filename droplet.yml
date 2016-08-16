@@ -5,6 +5,7 @@
   roles:
     #- common
     #- vsftpd
-    - nginx
+    #- nginx
     - latexbuilder
+    #- test_apacman
 

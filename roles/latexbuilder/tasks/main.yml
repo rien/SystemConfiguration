@@ -9,7 +9,7 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - texlive-core
+    - texlive-most
     - python2-pip
     - python2-virtualenv
   notify: Restart latexbuilder service
@@ -46,6 +46,8 @@
     content: "{{ item.content }}"
     dest: "{{ latexbuilder_homedir }}/{{ item.dest }}"
     mode: "{{ item.mode }}"
+    owner: latexbuilder
+    group: http
   with_items: 
     - content: "{{ latexbuilder_access_code }}"
       dest: builder/access_codes
@@ -74,7 +76,7 @@
 
 - name: Create from ebooks.rxn.be to the build dir
   file:
-    src: "{{ latexbuilder_workdir }}/build"
+    src: "{{ latexbuilder_workdir }}/pdf"
     dest: /srv/http/ebooks/samenvattingen
     state: link
     owner: latexbuilder
