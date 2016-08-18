@@ -1,0 +1,34 @@
+---
+- name: Install transmission
+  pacman:
+    name: transmission-cli
+    state: latest
+
+- name: Stop transmission
+  service:
+    name: transmission
+    state: stopped
+
+- name: Create directories
+  file:
+    state: directory
+    owner: transmission
+    group: transmission
+    recurse: yes
+    path: "{{ item }}"
+  with_items:
+    - /var/lib/transmission/.config/transmission-daemon
+    - "{{ transmission_download_dir }}"
+    - "{{ transmission_incomplete_dir }}"
+
+- name: Copy configuration file
+  template:
+    src: settings.json.j2
+    dest: /var/lib/transmission/.config/transmission-daemon/settings.json
+    owner: transmission
+    group: transmission
+
+- name: Start transmission
+  service:
+    name: transmission
+    state: started
