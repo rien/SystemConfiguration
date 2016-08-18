@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: nginx_vhost, 
+      nginx_vhost_file: 'ebooks.rxn.be',
+      nginx_vhost_location: 'roles/ebooks/files' }

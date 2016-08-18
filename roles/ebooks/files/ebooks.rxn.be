@@ -9,6 +9,7 @@ server {
 
     location / {
         autoindex on;
+        autoindex_exact_size off;
         disable_symlinks off;
     }
 }

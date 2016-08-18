@@ -1,6 +1,6 @@
 ---
 - name: Install nginx
-  pacman: name=nginx-mainline state=present
+  pacman: name=nginx-mainline state=latest
 
 - name: Create vhost directoris
   file: 
@@ -10,18 +10,10 @@
     - sites-enabled
     - sites-available
 
-- name: Copy configuration files
-  copy: src=files/config/ dest=/etc/nginx/
-  notify: Restart nginx
-
-- name: Symlink enabled files
-  file: 
-   src: /etc/nginx/sites-available/{{ item }} 
-   path: /etc/nginx/sites-enabled/{{ item }}
-   state: link
-  with_items:
-    - ebooks.rxn.be
-  # TODO: - latexbuilder
+- name: Copy nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
   notify: Restart nginx
 
 - name: Ensure nginx is enabled

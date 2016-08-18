@@ -4,8 +4,8 @@
 
   roles:
     #- common
-    #- vsftpd
-    #- nginx
+    # - ebooks
     - latexbuilder
     #- test_apacman
+    #- transmission
 
