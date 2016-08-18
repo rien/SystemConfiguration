@@ -1,3 +1,0 @@
-[submodule "ansible-modules-extras"]
-	path = ansible-modules-extras
-	url = git@github.com:R13N/ansible-modules-extras.git
