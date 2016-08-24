@@ -1,0 +1,3 @@
+[submodule "submodules/aura"]
+	path = submodules/aura
+	url = git@gist.github.com:5674d4ed606518beaa9e40a8ed5d430d.git
