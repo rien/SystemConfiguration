@@ -4,8 +4,8 @@
 
   roles:
     #- common
-    # - ebooks
-    - latexbuilder
-    #- test_apacman
+    #- ebooks
+    #- latexbuilder
+    #- test_aura
     #- transmission
 
