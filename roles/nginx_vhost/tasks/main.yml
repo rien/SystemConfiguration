@@ -1,6 +1,6 @@
 ---
-- name: Copy vhost file
-  copy:
+- name: Copy vhost file (optionally fill in variables)
+  template:
     src: '{{nginx_vhost_location }}/{{ nginx_vhost_file }}'
     dest: '/etc/nginx/sites-available/{{ nginx_vhost_file }}'
   notify: Restart nginx
