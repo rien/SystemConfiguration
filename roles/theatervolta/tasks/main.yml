@@ -1,0 +1,53 @@
+---
+
+- name: Clone GitHub repo locally
+  git:
+    repo: git@github.com:R13N/Volta.git
+    dest: theatervolta.be
+  delegate_to: localhost
+
+- name: Install dependencies
+  shell: bundle install
+  args:
+    chdir: theatervolta.be
+  delegate_to: localhost
+
+- name: Compile the site with nanoc
+  shell: bundle exec nanoc
+  args: 
+    chdir: theatervolta.be
+  delegate_to: localhost
+
+- name: Create webroot directory
+  file:
+    path: "{{ theatervolta_webroot }}"
+    state: directory
+    owner: http
+    group: http
+
+- find:
+    path: "{{ theatervolta_webroot }}"
+    file_type: file
+    hidden: true
+  register: theatervolta_files
+
+- find:
+    path: "{{ theatervolta_webroot }}"
+    file_type: directory
+    hidden: true
+  register: theatervolta_directories
+
+- name: Make sure the webroot is empty
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ theatervolta_files }}"
+    - "{{ theatervolta_directories }}"
+
+- name: Copy the compiled site to the webroot
+  copy:
+    src: theatervolta.be/output/
+    dest: "{{ theatervolta_webroot }}"
+    owner: http
+    group: http

@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: nginx_vhost, 
+    nginx_vhost_file: 'volta-beta',
+      nginx_vhost_location: 'roles/theatervolta/templates' }
