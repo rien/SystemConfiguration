@@ -1,0 +1,5 @@
+---
+- name: Marnix is a server with tons of storage
+  hosts: marnix
+  roles:
+    - marnixdata

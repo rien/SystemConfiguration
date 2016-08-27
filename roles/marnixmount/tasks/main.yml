@@ -1,0 +1,53 @@
+---
+
+- name: Install sshfs
+  pacman:
+    name: sshfs
+    state: latest
+
+- name: Create a data group
+  group:
+    name: data
+  register: marnixmount_data_group
+
+- name: Create a data user with an SSH key
+  user:
+    name: marnixmount
+    shell: /bin/nologin
+    system: yes
+    createhome: yes
+    groups: data
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_comment: "marnixmount@{{ ansible_hostname }}"
+  register: marnixmount_user
+
+- name: Key to be added
+  debug: 
+    var: marnixmount_user.ssh_public_key
+
+- name: Add public key to marnix's authorized_keys
+  authorized_key:
+    user: data
+    key: "{{ marnixmount_user.ssh_public_key }}"
+  delegate_to: marnix
+
+- name: Test ssh connection (as root) and get marnix's host key
+  shell: 'ssh -o StrictHostKeyChecking=no -o IdentityFile={{ marnixmount_user.ssh_key_file }} data@marnix.rxn.be exit'
+
+- name: Create mount directory
+  file:
+    path: /mnt/marnix
+    owner: marnixmount
+    group: data
+    mode: u=rwx,g=rwx,o=
+    state: directory
+
+- name: Mount marnix in fstab
+  mount:
+    src: data@marnix.rxn.be:/srv/data
+    name: /mnt/marnix
+    fstype: fuse.sshfs
+    opts: 'x-systemd.automount,_netdev,users,idmap=user,allow_other,transform_symlinks,follow_symlinks,reconnect,default_permissions,uid={{ marnixmount_user.uid }},gid={{ marnixmount_data_group.gid }},IdentityFile={{ marnixmount_user.ssh_key_file }}'
+    state: present
+

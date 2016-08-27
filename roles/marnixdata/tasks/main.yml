@@ -1,0 +1,29 @@
+---
+- name: Make data user
+  user:
+    name: data
+    createhome: yes
+    system: yes
+    shell: /bin/sh
+  register: marnix_data_user
+
+- name: Add user rien to data group
+  user:
+    name: rien
+    groups: data
+    append: yes
+
+- name: Make data folder & set permissions
+  file:
+    path: /srv/data
+    owner: data
+    group: data
+    mode: u=rwx,g=rwx,o=
+
+- name: Make link to data directory
+  file:
+    src: /srv/data
+    dest: '{{ marnix_data_user.home }}/data'
+    state: link
+
+
