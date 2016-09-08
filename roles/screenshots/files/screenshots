@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name i.rxn.be;
+    root /srv/http/screenshots;
+
+    sendfile on;
+
+    location / {
+
+        deny all;
+
+        location ~ \.(jpe?g|png)$ {
+         allow all;
+        }
+    }
+
+}
