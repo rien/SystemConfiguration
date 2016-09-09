@@ -4,7 +4,7 @@
     name: screenshot
     home: /srv/http/screenshots
     system: yes
-    shell: /bin/nologin
+    shell: /bin/sh
     comment: Host screenshots at i.rxn.be
 
 - name: Create directory for screenshots
