@@ -1,5 +1,5 @@
 ---
 dependencies:
-  - { role: nginx_vhost, 
+  - { role: nginx_vhost,
       nginx_vhost_file: 'ebooks',
       nginx_vhost_location: 'roles/ebooks/files' }

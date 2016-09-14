@@ -1,6 +1,7 @@
 server {
     listen 80;
-    server_name {{ theatervolta_site }};
+    
+    server_name {{ theatervolta_site }} www.{{ theatervolta_site }};
     access_log /var/log/nginx/volta-access.log main;
     root {{ theatervolta_webroot }};
 
