@@ -1,0 +1,16 @@
+---
+- name: Ensure .ssh directory exists
+  file:
+    path: '{{ item.home }}/.ssh'
+    state: directory
+    owner: '{{ item.name }}'
+  with_items: '{{ authorized_keys_users }}'
+
+- name: Copy authorized_keys file
+  copy:
+    src: authorized_keys
+    dest: '{{ item.home }}/.ssh/'
+    mode: u=rw,g=r,o=r
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+  with_items: '{{ authorized_keys_users }}'
