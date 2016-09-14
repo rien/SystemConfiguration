@@ -18,9 +18,7 @@
     - python
     - python2
     - ranger
-      #- rbenv AUR
     - rsync
-    - ruby
     - openssh
     - openssl
     - screenfetch

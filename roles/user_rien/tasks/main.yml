@@ -1,8 +1,33 @@
 
+
+- name: Add groups admin, sudo, wheel
+  group:
+    name: '{{ item }}'
+  with_items:
+    - 'admin'
+    - 'sudo'
+    - 'wheel'
+
 - name: Add the user 'rien'
   user:
     name: rien
     comment: Rien Maertens
-    groups: systemd-journal users lp sudo admin wheel
-    createhome: yes
+    groups: systemd-journal,users,lp,sudo,admin,wheel
+    createhome: no
+    home: '/home/rien'
     shell: /bin/zsh
+
+- name: Create user dir
+  file:
+    path: '/home/rien'
+    state: directory
+    owner: rien
+    group: rien
+
+- set_fact:
+    dotfiles_repo: 'git@github.com:R13N/puntbestanden.git'
+    dotfiles_user: 'rien'
+    dotfiles_user_home: '/home/rien'
+
+# Install dotfiles
+- include: dotfiles.yml
