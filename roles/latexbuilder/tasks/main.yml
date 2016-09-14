@@ -35,11 +35,12 @@
     recurse: yes
     owner: latexbuilder
     group: http
-    mode: 'u=rwx,g=rx,o=r' 
+    mode: 'u=rwx,g=rx,o=r'
   with_items:
     - "{{ latexbuilder_homedir }}"
     - "{{ latexbuilder_homedir}}/.ssh"
     - "{{ latexbuilder_workdir}}/build"
+    - "{{ latexbuilder_workdir}}/pdf"
 
 - name: Copy latexbuilder ssh keys and access_codes
   copy:
@@ -48,7 +49,7 @@
     mode: "{{ item.mode }}"
     owner: latexbuilder
     group: http
-  with_items: 
+  with_items:
     - content: "{{ latexbuilder_access_code }}"
       dest: builder/access_codes
       mode: "u=rw,g=,o="
@@ -59,7 +60,7 @@
       dest: .ssh/id_rsa.pub
       mode: "u=rw,g=r,o=r"
   notify: Restart latexbuilder service
-    
+
 - name: Create virtualenv and install requirements
   pip:
     virtualenv_command: virtualenv2
@@ -74,7 +75,7 @@
     - Reload systemd daemon
     - Restart latexbuilder service
 
-- name: Create from ebooks.rxn.be to the build dir
+- name: Create symlink from ebooks.rxn.be to the build dir
   file:
     src: "{{ latexbuilder_workdir }}/pdf"
     dest: /srv/http/ebooks/samenvattingen
