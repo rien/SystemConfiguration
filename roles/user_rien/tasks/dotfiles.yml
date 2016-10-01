@@ -13,6 +13,13 @@
     repo: '{{ dotfiles_repo }}'
     dest: '{{ dotfiles_location }}'
 
+- name: User owns his dotfiles repo
+  file:
+    path: '{{ dotfiles_location }}'
+    owner: '{{ dotfiles_user }}'
+    group: '{{ dotfiles_user }}'
+    recurse: yes
+
 - name: Find top-level files
   find:
     file_type: file

@@ -31,3 +31,20 @@
 
 # Install dotfiles
 - include: dotfiles.yml
+
+- name: Install rbenv
+  git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: '/home/rien/.rbenv'
+
+- name: Install ruby-build
+  git:
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: '/home/rien/.rbenv/plugins/ruby-build'
+
+- name: User owns rbenv directory
+  file:
+    path: '/home/rien/.rbenv'
+    owner: rien
+    group: rien
+    recurse: yes
