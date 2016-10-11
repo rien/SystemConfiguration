@@ -1,0 +1,14 @@
+---
+- name: Create ebooks directory
+  file:
+    path: '/srv/http/thebeautybar'
+    state: directory
+    owner: http
+    group: http
+
+- name: Copy placeholder file
+  copy:
+    src: index.html
+    dest: /srv/http/thebeautybar
+    owner: http
+    group: http

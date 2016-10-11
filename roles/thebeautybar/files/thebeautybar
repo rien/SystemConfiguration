@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    server_name thebeautybar.rxn.be beautybar.rxn.be;
+    access_log /var/log/nginx/thebeautybar-access.log main;
+    root /srv/http/thebeautybar;
+
+    sendfile on;
+}
