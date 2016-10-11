@@ -25,7 +25,7 @@
     group: rien
 
 - set_fact:
-    dotfiles_repo: 'git@github.com:R13N/puntbestanden.git'
+    dotfiles_repo: 'https://github.com/R13N/puntbestanden.git'
     dotfiles_user: 'rien'
     dotfiles_user_home: '/home/rien'
 
