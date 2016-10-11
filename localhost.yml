@@ -1,0 +1,7 @@
+---
+- name: Execute roles on the localhost
+  hosts: localhost
+  become_user: root
+
+  roles:
+    - user_rien
