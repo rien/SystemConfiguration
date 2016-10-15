@@ -4,6 +4,11 @@
     name: mariadb
     state: present
 
+- name: Install mysql-python
+  pacman:
+    name: mysql-python
+    state: present
+
 - name: Check if mariadb is installed yet
   find:
     paths: "/var/lib/mysql"

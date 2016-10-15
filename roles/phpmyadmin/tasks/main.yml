@@ -12,29 +12,15 @@
 - name: Check if database exists
   shell:  mysql -e 'SHOW DATABASES;' | grep 'phpmyadmin'
   ignore_errors: yes
-  register: dbstatus
+  register: pma_dbstatus
 
 - name: Create database
   shell: mysql -u root < /usr/share/webapps/phpMyAdmin/sql/create_tables.sql
-  when: dbstatus.rc == 1
+  when: pma_dbstatus.rc == 1
 
-- name: Give pma user privileges
-  shell: |
-    mysql -u root -e "CREATE USER 'pma'@'localhost';
-    GRANT USAGE ON mysql.* TO 'pma'@'localhost';
-    GRANT SELECT (
-    Host, User, Select_priv, Insert_priv, Update_priv, Delete_priv,
-    Create_priv, Drop_priv, Reload_priv, Shutdown_priv, Process_priv,
-    File_priv, Grant_priv, References_priv, Index_priv, Alter_priv,
-    Show_db_priv, Super_priv, Create_tmp_table_priv, Lock_tables_priv,
-    Execute_priv, Repl_slave_priv, Repl_client_priv
-    ) ON mysql.user TO 'pma'@'localhost';
-    GRANT SELECT ON mysql.db TO 'pma'@'localhost';
-    GRANT SELECT ON mysql.host TO 'pma'@'localhost';
-    GRANT SELECT (Host, Db, User, Table_name, Table_priv, Column_priv)
-    ON mysql.tables_priv TO 'pma'@'localhost';
-    GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost';"
-  when: dbstatus.rc == 1
-
-- name: Set pma password
-  shell: mysql -u root -e "SET PASSWORD FOR 'pma'@'localhost' = PASSWORD('{{ phpmyadmin_db_password }}');"
+- name: Create pma user and grant privileges
+  mysql_user:
+    name: pma
+    host: localhost
+    password: '{{ phpmyadmin_db_password }}'
+    priv: "mysql.*:USAGE/mysql.user:SELECT(Host,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv,Reload_priv,Shutdown_priv,Process_priv,File_priv,Grant_priv,References_priv,Index_priv,Alter_priv,Show_db_priv,Super_priv,Create_tmp_table_priv,Lock_tables_priv,Execute_priv,Repl_slave_priv,Repl_client_priv)/mysql.db:SELECT/mysql.host:SELECT/mysql.tables_priv:SELECT(Host,Db,User,Table_name,Table_priv,Column_priv)/phpmyadmin.*:SELECT,INSERT,UPDATE,DELETE"
