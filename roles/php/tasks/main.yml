@@ -1,0 +1,18 @@
+---
+- name: Install php and apcu
+  pacman:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - php
+    - php-apcu
+
+- name: copy php.ini
+  copy:
+    src: php.ini
+    dest: /etc/php/php.ini
+
+- name: copy apcu.ini
+  copy:
+    src: apcu.ini
+    dest: /etc/php/conf.d/apcu.ini
