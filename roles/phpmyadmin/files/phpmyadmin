@@ -1,0 +1,14 @@
+server {
+    server_name     phpmyadmin.rxn.be;
+
+    root    /usr/share/webapps/phpMyAdmin;
+    index   index.php;
+
+    location ~ \.php$ {
+        try_files      $uri =404;
+        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_param  PHP_ADMIN_VALUE  open_basedir="/srv/http/:/tmp/:/usr/share/pear/:/usr/share/webapps/:/etc/webapps/";
+        fastcgi_index  index.php;
+        include        fastcgi.conf;
+    }
+}

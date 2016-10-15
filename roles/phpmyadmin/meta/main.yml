@@ -1,0 +1,7 @@
+---
+dependencies:
+  - { role: mariadb }
+  - { role: php }
+  - { role: nginx_vhost,
+      nginx_vhost_file: 'phpmyadmin',
+      nginx_vhost_location: 'roles/phpmyadmin/files' }
