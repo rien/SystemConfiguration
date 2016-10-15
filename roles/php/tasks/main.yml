@@ -1,11 +1,12 @@
 ---
-- name: Install php and apcu
+- name: Install php and extensions
   pacman:
     name: '{{ item }}'
     state: present
   with_items:
     - php
     - php-apcu
+    - php-fpm
 
 - name: copy php.ini
   copy:
@@ -16,3 +17,9 @@
   copy:
     src: apcu.ini
     dest: /etc/php/conf.d/apcu.ini
+
+- name: Enable and start php-fpm
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes
