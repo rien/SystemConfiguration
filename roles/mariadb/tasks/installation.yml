@@ -1,0 +1,15 @@
+- name: Install expect
+  pacman:
+    name: expect
+    state: installed
+
+- name: Execute mysql_install_db
+  command: '/usr/bin/mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql'
+
+- name: Start mysqld service
+  service:
+    name: mysqld
+    state: started
+
+- name: Secure installation script
+  script: 'mariadb_secure_installation.sh {{ mysql_root_pw }}'

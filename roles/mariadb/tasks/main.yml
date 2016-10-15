@@ -1,0 +1,33 @@
+---
+- name: Install mariadb
+  pacman:
+    name: mariadb
+    state: present
+
+- name: Check if mariadb is installed yet
+  find:
+    paths: "/var/lib/mysql"
+  register: mysql_dir_contents
+
+- name: Install mariadb
+  include: installation.yml
+  when: mysql_dir_contents.matched == 0
+
+- name: Copy system-wide configuration file
+  copy:
+    src: my.cnf
+    dest: /etc/mysql/my.cnf
+
+- name: Copy the configuration file for root
+  template:
+    src: root_my.cnf.j2
+    dest: /root/.my.cnf
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Enable and start mysqld service
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
