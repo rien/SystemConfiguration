@@ -1,12 +1,11 @@
 ---
-- name: This is a droplet hosted by Digital Ocean.
-  hosts: droplet
+- name: CentOS droplet hosted by Digital Ocean.
+  hosts: beata
 
   roles:
-    - common
+    #- common
     #- ebooks
-    #- latexbuilder
-    #- test_aura
+    - latexbuilder
     #- transmission
     #- theatervolta
     #- marnixmount

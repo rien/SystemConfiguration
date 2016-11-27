@@ -1,5 +1,10 @@
 ---
-- name: Restart nginx
+- name: Check nginx syntax
+  command: "/usr/sbin/nginx -t"
+  listen: "Restart webserver"
+
+- name: Restart nginx service
   service:
     name: nginx
     state: restarted
+  listen: "Restart webserver"

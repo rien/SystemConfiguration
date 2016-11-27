@@ -4,15 +4,8 @@
     - vars/secrets.yml
     - vars/main.yml
 
-- name: Install needed packages
-  pacman:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - texlive-most
-    - python2-pip
-    - python2-virtualenv
-  notify: Restart latexbuilder service
+- name: OS Specific installation
+  include: "{{ ansible_distribution }}.yml"
 
 - name: Create latexbuilder user
   user:
@@ -22,7 +15,7 @@
     shell: /usr/bin/nologin
 
 - name: Checkout latexbuilder code
-  git: 
+  git:
     repo: https://github.com/R13N/LatexBuilder.git
     dest: "{{ latexbuilder_workdir }}"
     accept_hostkey: yes
@@ -63,15 +56,19 @@
 
 - name: Create virtualenv and install requirements
   pip:
-    virtualenv_command: virtualenv2
+    virtualenv_command: "{{ latexbuilder_venv_command }}"
     virtualenv: "{{ latexbuilder_workdir }}/VENV"
     requirements: "{{ latexbuilder_workdir }}/requirements.txt"
+    extra_args: "--upgrade"
+  become: true
+  become_user: latexbuilder
+  notify: Restart latexbuilder service
 
 - name: Copy service file
   copy:
     src: files/latexbuilder.service
     dest: /usr/lib/systemd/system/latexbuilder.service
-  notify: 
+  notify:
     - Reload systemd daemon
     - Restart latexbuilder service
 
