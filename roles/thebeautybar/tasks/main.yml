@@ -1,14 +1,45 @@
 ---
-- name: Create ebooks directory
-  file:
-    path: '/srv/http/thebeautybar'
-    state: directory
-    owner: http
-    group: http
 
-- name: Copy placeholder file
-  copy:
-    src: index.html
-    dest: /srv/http/thebeautybar
-    owner: http
+- name: Create user "thebeautybar"
+  user:
+    name: thebeautybar
+    home: /srv/http/thebeautybar
+    createhome: yes
+
+- name: Check if wordpress is already installed
+  find:
+    path: /srv/http/thebeautybar/index.php
+  register: tbb_index
+
+- include: installation.yml
+  when: tbb_index.matched == 0
+
+- name: Create database
+  mysql_db:
+    name: thebeautybar
+    state: present
+
+- name: Create database user
+  mysql_user:
+    name: thebeautybar
+    password: '{{ thebeautybar_db_password }}'
+    priv: thebeautybar.*:ALL
+    host: 'localhost'
+
+- name: Change ownership of the installation
+  file:
+    path: /srv/http/thebeautybar
+    owner: thebeautybar
     group: http
+    mode: g+rw
+    state: directory
+    recurse: yes
+
+- name: Create upload directory
+  file:
+    path: /srv/http/thebeautybar/wp-content/uploads
+    owner: thebeautybar
+    group: http
+    state: directory
+    recurse: yes
+    mode: g+rw

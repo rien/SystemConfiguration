@@ -1,0 +1,15 @@
+---
+- name: Download WordPress
+  get_url:
+    url: http://wordpress.org/latest.tar.gz
+    dest: /srv/http/thebeautybar/latest.tar.gz
+
+- name: Extract archive
+  shell: /bin/tar xzvf latest.tar.gz && mv wordpress/* .
+  args:
+    chdir: /srv/http/thebeautybar
+    creates: /srv/http/thebeautybar/index.php
+
+- pause:
+    prompt: "When your site is up & running you have to complete the setup yourself (with the db password)."
+

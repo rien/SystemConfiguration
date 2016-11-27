@@ -1,8 +1,18 @@
 server {
-    listen 80;
-    server_name thebeautybar.rxn.be beautybar.rxn.be;
-    access_log /var/log/nginx/thebeautybar-access.log main;
-    root /srv/http/thebeautybar;
+    server_name     thebeautybar.rxn.be beautybar.rxn.be;
 
-    sendfile on;
+    root    /srv/http/thebeautybar;
+    index   index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?q=$uri&$args;
+    }
+
+    location ~ \.php$ {
+        try_files      $uri =404;
+        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_param  PHP_ADMIN_VALUE  open_basedir="/srv/http/:/tmp/:/usr/share/pear/:/usr/share/webapps/:/etc/webapps/";
+        fastcgi_index  index.php;
+        include        fastcgi.conf;
+    }
 }

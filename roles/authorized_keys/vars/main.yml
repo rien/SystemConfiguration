@@ -4,3 +4,5 @@ authorized_keys_users:
     home: /home/rien
   - name: root
     home: /root
+  - name: screenshot
+    home: /srv/http/screenshots

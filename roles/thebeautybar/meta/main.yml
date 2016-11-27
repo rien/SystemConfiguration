@@ -1,5 +1,7 @@
 ---
 dependencies:
+  - { role: mariadb }
+  - { role: php }
   - { role: nginx_vhost,
       nginx_vhost_file: 'thebeautybar',
       nginx_vhost_location: 'roles/thebeautybar/files' }

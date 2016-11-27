@@ -5,3 +5,10 @@
     state: directory
     owner: http
     group: http
+
+- name: Install htpasswd file
+  copy:
+    src: ebooks_passwd
+    dest: '/etc/nginx/'
+    owner: http
+    group: http
