@@ -3,24 +3,24 @@
   pacman: name=nginx-mainline state=latest
 
 - name: Create vhost directoris
-  file: 
-    dest: /etc/nginx/{{ item }} 
+  file:
+    dest: "/etc/nginx/{{ item }}"
     state: directory
   with_items:
     - sites-enabled
     - sites-available
 
-- name: Copy nginx config
+- name: Copy nginx config and snippets
   copy:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
+    src: "{{ item }}"
+    dest: "/etc/nginx/{{ item }}"
+  with_items:
+    - "nginx.conf"
+    - "snippets/"
   notify: Restart nginx
 
 - name: Ensure nginx is enabled
   service:
     name: nginx
+    state: started
     enabled: yes
-
-- name: Ensure nginx configuration is correct
-  command: /usr/bin/nginx -t
-
