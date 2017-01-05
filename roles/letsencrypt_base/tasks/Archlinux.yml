@@ -1,0 +1,6 @@
+---
+- name: Install certbot
+  pacman:
+    name: certbot
+    state: present
+    update_cache: yes

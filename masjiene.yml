@@ -1,0 +1,4 @@
+---
+- name: Masjiene is a server with tons of storage
+  hosts: masjiene
+  roles:

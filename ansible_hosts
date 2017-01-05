@@ -1,6 +1,6 @@
 [arch]
-droplet ansible_port=9450 ansible_host=do ansible_user=root
-marnix ansible_port=2222 ansible_host=marnix.local ansible_user=root
+droplet ansible_port=9450 ansible_host=rxn.be ansible_user=root
+masjiene ansible_port=2222 ansible_host=masjiene.rxn.be ansible_user=rien ansible_become=true
 localhost ansible_connection=local ansible_become=yes
 
 [centOS]

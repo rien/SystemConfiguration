@@ -25,13 +25,20 @@
     - sites-enabled
     - sites-available
 
-- name: Copy nginx config
+- name: Copy config
   template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
   notify: "Restart webserver"
 
-- name: Ensure nginx is enabled
+- name: Copy snippets
+  copy:
+    src: "snippets/"
+    dest: "/etc/nginx/snippets/"
+  notify: "Restart webserver"
+
+- name: Ensure nginx is enabled & running
   service:
     name: nginx
+    state: started
     enabled: yes
