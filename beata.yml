@@ -3,10 +3,10 @@
   hosts: beata
 
   roles:
-    #- common
-    #- ebooks
-    - latexbuilder
-    #- transmission
+    - common
+    - ebooks
+    #- latexbuilder
+    - { role: transmission, tags: ["transmission"] }
     #- theatervolta
     #- marnixmount
     #- user_rien
