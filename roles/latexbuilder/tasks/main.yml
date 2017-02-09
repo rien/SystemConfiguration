@@ -54,8 +54,9 @@
       mode: "u=rw,g=r,o=r"
   notify: Restart latexbuilder service
 
-- name: Create virtualenv and install requirements
+- name: Create virtualenv
   pip:
+    virtualenv_python: python2.7
     virtualenv_command: "{{ latexbuilder_venv_command }}"
     virtualenv: "{{ latexbuilder_workdir }}/VENV"
     requirements: "{{ latexbuilder_workdir }}/requirements.txt"
@@ -63,6 +64,11 @@
   become: true
   become_user: latexbuilder
   notify: Restart latexbuilder service
+  # Workaround for a bug that will be fixed in 2.2.1
+  when:
+    - ansible_version.major >= 2
+    - ansible_version.minor >= 2
+    - ansible_version.revision >= 1
 
 - name: Copy service file
   copy:

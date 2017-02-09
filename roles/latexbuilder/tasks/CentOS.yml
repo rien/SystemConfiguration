@@ -8,4 +8,4 @@
     - python-virtualenv
   notify: Restart latexbuilder service
 
-- set_fact: latexbuilder_venv_command="virtualenv"
+- set_fact: latexbuilder_venv_command="virtualenv-2.7"

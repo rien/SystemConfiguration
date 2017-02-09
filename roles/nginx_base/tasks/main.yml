@@ -13,9 +13,12 @@
 
 - name: Install nginx on CentOS
   yum:
-    name: nginx
+    name: "{{ item }}"
     state: latest
   when: ansible_distribution == "CentOS"
+  with_items:
+    - epel-release
+    - nginx
 
 - name: Create vhost directories
   file:

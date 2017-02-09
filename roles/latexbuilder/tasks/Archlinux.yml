@@ -6,6 +6,7 @@
     - texlive-most
     - python2-pip
     - python2-virtualenv
+    - pandoc
   notify: Restart latexbuilder service
 
 - set_fact: latex_venv_command="virtualenv2"
