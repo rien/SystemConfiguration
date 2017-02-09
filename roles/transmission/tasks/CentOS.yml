@@ -1,0 +1,14 @@
+---
+- name: Install transmission
+  yum:
+    pkg: '{{ item }}'
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - transmission-daemon
+    - transmission-common
+    - transmission-cli
+
+- set_facts:
+    transmission_service: transmission-daemon

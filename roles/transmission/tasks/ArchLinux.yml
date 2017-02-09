@@ -1,0 +1,8 @@
+---
+- name: Install transmission
+  pacman:
+    name: transmission-cli
+    state: latest
+
+- set_facts:
+    transmission_service: transmission
