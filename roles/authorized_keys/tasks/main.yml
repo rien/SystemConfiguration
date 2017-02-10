@@ -8,8 +8,8 @@
 
 - name: Copy authorized_keys file
   copy:
-    src: authorized_keys
-    dest: '{{ item.home }}/.ssh/'
+    content: '{{ authorized_keys }}'
+    dest: '{{ item.home }}/.ssh/authorized_keys'
     mode: u=rw,g=r,o=r
     owner: '{{ item.name }}'
     group: '{{ item.name }}'

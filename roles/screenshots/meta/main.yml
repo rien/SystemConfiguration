@@ -1,5 +1,15 @@
 ---
 dependencies:
-  - { role: nginx_vhost,
-      nginx_vhost_file: 'screenshots',
-      nginx_vhost_location: 'roles/screenshots/files' }
+
+  - role: letsencrypt_domain
+    letsencrypt_email: 'maertensrien@gmail.com'
+    letsencrypt_domain: 'i.rxn.be'
+
+  - role: nginx_vhost
+    nginx_vhost_file: 'screenshots'
+    nginx_vhost_location: 'roles/screenshots/files'
+
+  - role: authorized_keys
+    authorized_keys_users:
+      - name: screenshot
+        home: /srv/http/screenshots
