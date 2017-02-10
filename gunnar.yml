@@ -1,17 +1,43 @@
 ---
-- name: This is a droplet hosted by Digital Ocean.
-  hosts: droplet
+- name: CentOS droplet hosted by Digital Ocean.
+  hosts: gunnar
 
   roles:
     - common
-    #- ebooks
-    #- latexbuilder
-    #- test_aura
-    #- transmission
-    #- theatervolta
-    #- marnixmount
-    #- user_rien
-    #- screenshots
-    #- authorized_keys
-    #- thebeautybar
-    #- phpmyadmin
+
+    - role: authorized_keys
+      authorized_keys_users:
+        - name: root
+          home: /root
+#        - name: screenshot
+#        home: /srv/http/screenshots
+      tags:
+        - authorized_keys
+
+    - role: ebooks
+      tags:
+        - ebooks
+        - sites
+
+    - role: screenshots
+      tags:
+        - screenshots
+        - sites
+
+    - role: transmission
+      tags:
+        - transmission
+
+    - role: test_letsencrypt
+      tags:
+        - test
+
+    - role: theatervolta
+      theatervolta_webroot: /srv/http/volta
+      theatervolta_site: theatervolta.be
+      tags:
+        - theatervolta
+        - sites
+
+  vars_files:
+    - vars/transmission_secrets.yml

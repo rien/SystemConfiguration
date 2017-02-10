@@ -10,7 +10,7 @@
     src: "/etc/nginx/sites-available/{{ nginx_vhost_file }}"
     dest: "/etc/nginx/sites-enabled/{{ nginx_vhost_file }}"
     state: link
-  notify: Resart nginx
+  notify: Restart nginx
 
 - name: Check nginx syntax
   command: /usr/sbin/nginx -t
