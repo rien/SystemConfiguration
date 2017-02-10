@@ -1,3 +1,0 @@
-
-- name: Request letsencrypt certificate
-  include: request.yml

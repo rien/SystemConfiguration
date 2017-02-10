@@ -4,9 +4,7 @@
     path: "/etc/letsencrypt/live/{{ letsencrypt_domain }}"
   register: domain_folder
 
-- set_fact:
-    letsencrypt_new_domains: "{{ letsencrypt_new_domains + [letsencrypt_domain] }}"
+- name: Do request if it does not exist
+  import: "request.yml"
   when: not domain_folder.stat.exists
-  changed_when: not domain_folder.stat.exists
-  notify: Request letsencrypt certificate
 
