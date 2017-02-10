@@ -4,9 +4,36 @@
 
   roles:
     - common
-    - ebooks
-    - authorized_keys
-    - screenshots
-    - { role: transmission, tags: ["transmission"] }
-    - { role: test_letsencrypt, tags: ["test"] }
-    - theatervolta
+
+    - role: authorized_keys
+      with_vars:
+        authorized_keys_users:
+          - name: root
+            home: /root
+          - name: screenshot
+            home: /srv/http/screenshots
+      tags:
+        - authorized_keys
+
+    - role: ebooks
+      tags:
+        - ebooks
+        - sites
+
+    - role: screenshots
+      tags:
+        - screenshots
+        - sites
+
+    - role: transmission
+      tags:
+        - transmission
+
+    - role: test_letsencrypt
+      tags:
+        - test
+
+    - role: theatervolta
+      tags:
+        - theatervolta
+        - sites
