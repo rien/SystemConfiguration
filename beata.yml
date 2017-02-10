@@ -7,7 +7,7 @@
     - ebooks
     #- latexbuilder
     - { role: transmission, tags: ["transmission"] }
-    - { role: test, tags: ["test"] }
+    - { role: test_letsencrypt, tags: ["test"] }
     #- theatervolta
     #- marnixmount
     #- user_rien

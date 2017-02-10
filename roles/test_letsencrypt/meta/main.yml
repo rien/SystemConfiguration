@@ -1,9 +1,9 @@
 ---
 dependencies:
-  - { role: nginx_vhost,
-      nginx_vhost_file: 'test',
-      nginx_vhost_location: 'roles/test_letsencrypt/files' }
-
   - { role: letsencrypt_domain,
       letsencrypt_email: 'maertensrien@gmail.com',
       letsencrypt_domain: 'test.rxn.be' }
+
+  - { role: nginx_vhost,
+      nginx_vhost_file: 'test',
+      nginx_vhost_location: 'roles/test_letsencrypt/files' }
