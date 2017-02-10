@@ -2,3 +2,22 @@
 - name: Masjiene is a server with tons of storage
   hosts: masjiene
   roles:
+
+    - common
+
+    - role: authorized_keys
+      authorized_keys_users:
+        - name: root
+          home: /root
+      tags:
+        - authorized_keys
+
+    - role: transmission
+      transmission_download_dir: /srv/transmission/downloaded
+      transmission_incomplete_dir: /srv/transmission/incomplete
+      # secret vars: see host_vars/masjiene.yml
+      tags:
+        - transmission
+
+  vars_files:
+    - vars/authorized_keys.yml

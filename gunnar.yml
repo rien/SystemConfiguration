@@ -9,8 +9,6 @@
       authorized_keys_users:
         - name: root
           home: /root
-#        - name: screenshot
-#        home: /srv/http/screenshots
       tags:
         - authorized_keys
 
@@ -27,6 +25,9 @@
     - role: transmission
       tags:
         - transmission
+      transmission_download_dir: /srv/transmission/downloaded
+      transmission_incomplete_dir: /srv/transmission/incomplete
+      # secret vars: see host_vars/gunnar.yml
 
     - role: test_letsencrypt
       tags:
@@ -40,4 +41,4 @@
         - sites
 
   vars_files:
-    - vars/transmission_secrets.yml
+    - vars/authorized_keys.yml
