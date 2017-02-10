@@ -21,12 +21,12 @@
 
 - name: Compile the site with nanoc
   shell: bundle exec nanoc
-  args: 
+  args:
     chdir: theatervolta.be
   delegate_to: localhost
 
 - name: Deploy the site
   shell: bundle exec nanoc deploy
-  args: 
+  args:
     chdir: theatervolta.be
   delegate_to: localhost

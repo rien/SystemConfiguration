@@ -1,36 +1,12 @@
 ---
-- name: Update system
-  pacman: update_cache=yes upgrade=yes
 
-- name: Install essential packages.
-  pacman: name={{ item }} state=present
-  with_items:
-    - base-devel
-    - bc
-    - dos2unix
-    - git
-    - hdparm
-    - htop
-    - httpie
-    - lsof
-    - neovim
-    - nmap
-    - python
-    - python2
-    - ranger
-    - rsync
-    - openssh
-    - openssl
-    - screenfetch
-    - smartmontools
-    - speedtest-cli
-    - thefuck
-    - tmux
-    - tree
-    - unzip
-    - vpnc
-    - wget
-    - zsh
+- name: Set timezone
+  file:
+    state: link
+    src: "/usr/share/zoneinfo/Europe/Brussels"
+    dest: "/etc/localtime"
+    force: yes
 
-- name: Symlink neovim to vim
-  file: src=/bin/nvim dest=/bin/vim state=link
+- name: Select distro
+  include: "{{ ansible_distribution }}.yml"
+

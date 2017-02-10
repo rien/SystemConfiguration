@@ -1,8 +1,0 @@
----
-authorized_keys_users:
-  - name: rien
-    home: /home/rien
-  - name: root
-    home: /root
-  - name: screenshot
-    home: /srv/http/screenshots

@@ -1,9 +1,10 @@
 ---
 - name: Install certbot
-  pacman:
-    name: "{{ item }}"
-    state: present
+  yum:
+    pkg: "{{ item }}"
+    state: latest
     update_cache: yes
   with_items:
     - openssl
+    - epel-release
     - certbot

@@ -1,0 +1,20 @@
+
+server {
+    listen 80;
+    server_name test.rxn.be;
+
+    index index.txt;
+    root /srv/test/;
+
+    include snippets/letsencrypt.conf;
+}
+
+server {
+    listen 443 ssl;
+    server_name test.rxn.be;
+    ssl_certificate     /etc/letsencrypt/live/test.rxn.be/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.rxn.be/privkey.pem;
+    index index.txt;
+    root /srv/test/;
+    include snippets/letsencrypt.conf;
+}

@@ -2,12 +2,12 @@
 
 - name: Make directory
   file:
-    name: /srv/masjiene
+    name: /srv/test
     owner: http
     group: http
     state: directory
 
 - name: Create index file
   copy:
-    content: "MASJIENE"
-    dest: /srv/masjiene/index.txt
+    content: "TEST"
+    dest: /srv/test/index.txt

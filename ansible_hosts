@@ -1,9 +1,9 @@
-# Add `export ANSIBLE_INVENTORY=/path/to/this/file` to .profile
-
 [arch]
-droplet ansible_port=9450 ansible_host=rxn.be ansible_user=root
 masjiene ansible_port=2222 ansible_host=masjiene.rxn.be ansible_user=rien ansible_become=true
-localhost ansible_connection=local ansible_become=yes
+localhost ansible_connection=local
+
+[centOS]
+gunnar ansible_port=9450 ansible_host=gunnar.rxn.be ansible_user=root
 
 [arch:vars]
 ansible_python_interpreter=/bin/python2

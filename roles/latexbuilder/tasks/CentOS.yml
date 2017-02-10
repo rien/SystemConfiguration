@@ -1,0 +1,11 @@
+- name: Install needed packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'texlive-*'
+    - python-pip
+    - python-virtualenv
+  notify: Restart latexbuilder service
+
+- set_fact: latexbuilder_venv_command="virtualenv-2.7"
