@@ -1,0 +1,9 @@
+---
+- name: Install certbot
+  yum:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - certbot

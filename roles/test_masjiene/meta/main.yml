@@ -1,9 +1,0 @@
----
-dependencies:
-  - { role: nginx_vhost,
-      nginx_vhost_file: 'masjiene',
-      nginx_vhost_location: 'roles/test_masjiene/files' }
-
-  - { role: letsencrypt_domain,
-      letsencrypt_email: 'maertensrien@gmail.com',
-      letsencrypt_domain: 'masjiene.rxn.be' }
