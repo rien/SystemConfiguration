@@ -5,13 +5,8 @@
   roles:
     - common
     - ebooks
-    #- latexbuilder
+    - authorized_keys
+    - screenshots
     - { role: transmission, tags: ["transmission"] }
     - { role: test_letsencrypt, tags: ["test"] }
-    #- theatervolta
-    #- marnixmount
-    #- user_rien
-    #- screenshots
-    #- authorized_keys
-    #- thebeautybar
-    #- phpmyadmin
+    - theatervolta
