@@ -13,12 +13,5 @@
     state: directory
     owner: screenshot
     group: http
-    mode: u=rw,g=r,o=
-
-- name: Create ssh direcotory (for authorized_keys)
-  file:
-    path: /srv/http/screenshots/.ssh
-    state: directory
-    owner: screenshot
-    mode: u=rw,g=,o=
+    mode: u=rwx,g=rx,o=rx
 

@@ -5,5 +5,4 @@ server {
     access_log /var/log/nginx/volta-access.log main;
     root {{ theatervolta_webroot }};
 
-    sendfile on;
 }

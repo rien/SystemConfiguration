@@ -1,9 +1,16 @@
 server {
     listen 80;
+    listen 443 ssl;
+
     server_name i.rxn.be;
     root /srv/http/screenshots;
 
-    sendfile on;
+    ssl_certificate /etc/letsencrypt/live/i.rxn.be/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/i.rxn.be/privkey.pem;
+
+    include snippets/ssl_options.conf;
+    include snippets/letsencrypt.conf;
+
 
     location / {
 

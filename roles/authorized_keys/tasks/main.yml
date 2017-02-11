@@ -4,6 +4,8 @@
     path: '{{ item.home }}/.ssh'
     state: directory
     owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: 'u=rwx,g=r,o=r'
   with_items: '{{ authorized_keys_users }}'
 
 - name: Copy authorized_keys file

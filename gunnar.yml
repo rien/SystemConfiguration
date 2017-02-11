@@ -1,5 +1,5 @@
 ---
-- name: CentOS droplet hosted by Digital Ocean.
+- name: CentOS droplet hosted by DigitalOcean.
   hosts: gunnar
 
   roles:
@@ -39,6 +39,12 @@
       tags:
         - theatervolta
         - sites
+
+    - role: postfix
+      postfix_hostname: gunnar.rxn.be
+      postfix_domain: rxn.be
+      postfix_main_user: rien
+      postfix_root_email: maertensrien@gmail.com
 
   vars_files:
     - vars/authorized_keys.yml
