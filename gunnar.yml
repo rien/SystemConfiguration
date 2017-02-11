@@ -6,6 +6,7 @@
     - common
 
     - role: authorized_keys
+      authorized_keys: "{{ rien_pubkey }}"
       authorized_keys_users:
         - name: root
           home: /root
@@ -40,11 +41,15 @@
         - theatervolta
         - sites
 
-    - role: postfix
-      postfix_hostname: gunnar.rxn.be
-      postfix_domain: rxn.be
-      postfix_main_user: rien
-      postfix_root_email: maertensrien@gmail.com
+    - role: mail
+      mail_hostname: gunnar.rxn.be
+      mail_domain: rxn.be
+      mail_main_user: rien
+      mail_root_email: maertensrien@gmail.com
+      tags:
+        - mail
+        - postfix
+        - dovecot
 
   vars_files:
-    - vars/authorized_keys.yml
+    - vars/secrets.yml

@@ -2,7 +2,6 @@
 dependencies:
 
   - role: letsencrypt_domain
-    letsencrypt_email: 'maertensrien@gmail.com'
     letsencrypt_domain: 'i.rxn.be'
 
   - role: nginx_vhost

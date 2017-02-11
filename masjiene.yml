@@ -6,11 +6,17 @@
     - common
 
     - role: authorized_keys
+      authorized_keys: "{{ rien_pubkey }}\n{{ bert_pubkey }}"
       authorized_keys_users:
         - name: root
           home: /root
       tags:
         - authorized_keys
+    - role: duckdns
+      duckdns_domain: masjiene
+      # token: see secrets.yml
+      tags:
+        - duckdns
 
     - role: transmission
       transmission_download_dir: /srv/transmission/downloaded
@@ -20,4 +26,4 @@
         - transmission
 
   vars_files:
-    - vars/authorized_keys.yml
+    - vars/secrets.yml
