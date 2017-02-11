@@ -1,0 +1,40 @@
+---
+- name: Install postfix, mailx & dovecot
+  yum:
+    name: "{{ item }}"
+    state: latest
+  notify: Reload Postfix
+  with_items:
+    - dovecot
+    - postfix
+    - mailx
+
+- name: Copy postfix config
+  template:
+    src: "{{ item }}"
+    dest: "/etc/{{ item }}"
+  with_items:
+    - postfix/main.cf
+    - postfix/master.cf
+  notify: Reload Postfix
+
+- name: Copy dovecot config
+  template:
+    src: dovecot/dovecot.conf
+    dest: /etc/dovecot/dovecot.conf
+  notify: Reload dovecot
+
+- name: Set aliases
+  template:
+    src: aliases
+    dest: /etc/aliases
+  notify: Reload aliases
+
+- name: Ensure postfix and dovecot are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - postfix
+    - dovecot
