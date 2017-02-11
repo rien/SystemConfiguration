@@ -1,0 +1,19 @@
+---
+- name: Copy systemd unit & timer
+  template:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+  with_items:
+    - duckdns.service
+    - duckdns.timer
+  register: duckdns_systemd_files
+
+- name: Reload systemd daemon if unit or timer file changed
+  command: /usr/bin/systemctl daemon-reload
+  when: duckdns_systemd_files.changed
+
+- name: Start and enable the timer
+  service:
+    name: duckdns.timer
+    state: restarted
+    enabled: yes

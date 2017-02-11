@@ -1,0 +1,7 @@
+[Unit]
+Description=Update DuckDNS for {{ duckdns_domain }} with our IP address
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl -s "https://www.duckdns.org/update/{{ duckdns_domain }}/{{ duckdns_token }}"
+User=nobody
