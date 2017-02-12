@@ -18,6 +18,20 @@
       tags:
         - duckdns
 
+    - role: user
+      user_name: bert
+      user_groups: sudo,wheel
+      user_authorized_keys: "{{ bert_pubkey }}"
+      tags:
+        - user
+
+    - role: user
+      user_name: rien
+      user_groups: sudo,wheel
+      user_authorized_keys: "{{ rien_pubkey }}"
+      tags:
+        - user
+
     - role: transmission
       transmission_download_dir: /srv/transmission/downloaded
       transmission_incomplete_dir: /srv/transmission/incomplete

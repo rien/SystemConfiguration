@@ -1,6 +1,6 @@
 ---
 
-- name: Add user groups
+- name: Ensure user's groups exist
   group:
     name: '{{ item }}'
   with_items: "{{ user_groups.split(',') }}"
@@ -10,25 +10,20 @@
     name: "{{ user_name }}"
     comment: "{{ user_comment }}"
     groups: "{{ user_groups }}"
-    createhome: no
+    createhome: yes
     home: "{{ user_home }}"
     shell: "{{ user_shell }}"
 
-- name: Create user dir
+- name: Fix permissions and ssh directory
   file:
-    path: "{{ user_home }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: "u=rwx,g=rx,o="
-
-- name: Ensure .ssh directory exists
-  file:
-    path: '{{ user_home }}/.ssh'
-    state: directory
-    owner: '{{ user_name }}'
-    group: '{{ user_name }}'
-    mode: 'u=rwx,g=rx,o=r'
+  with_items:
+    - "{{ user_home }}"
+    - "{{ user_home }}/.ssh"
 
 - name: Copy authorized_keys file
   copy:
