@@ -1,27 +1,21 @@
 ---
-- name: Install mariadb
-  pacman:
-    name: mariadb
-    state: present
-
-- name: Install mysql-python
-  pacman:
-    name: mysql-python
-    state: present
+- name: Distro specific installation
+  include: "{{ ansible_distro }}.yml"
 
 - name: Check if mariadb is installed yet
   find:
     paths: "/var/lib/mysql"
   register: mysql_dir_contents
 
+- name: Enable and start mysqld service
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+
 - name: Install mariadb
   include: installation.yml
   when: mysql_dir_contents.matched == 0
-
-- name: Copy system-wide configuration file
-  copy:
-    src: my.cnf
-    dest: /etc/mysql/my.cnf
 
 - name: Copy the configuration file for root
   template:
@@ -31,8 +25,9 @@
     owner: root
     group: root
 
-- name: Enable and start mysqld service
-  service:
-    name: mysqld
-    state: started
-    enabled: yes
+- name: Copy system-wide configuration file
+  copy:
+    src: my.cnf
+    dest: /etc/mysql/my.cnf
+  notify: Restart mysql
+
