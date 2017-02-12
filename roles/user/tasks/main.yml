@@ -1,0 +1,60 @@
+---
+
+- name: Add user groups
+  group:
+    name: '{{ item }}'
+  with_items: "{{ user_groups.split(',') }}"
+
+- name: Add the user "{{ user_name }}"
+  user:
+    name: "{{ user_name }}"
+    comment: "{{ user_comment }}"
+    groups: "{{ user_groups }}"
+    createhome: no
+    home: "{{ user_home }}"
+    shell: "{{ user_shell }}"
+
+- name: Create user dir
+  file:
+    path: "{{ user_home }}"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "u=rwx,g=rx,o="
+
+- name: Ensure .ssh directory exists
+  file:
+    path: '{{ user_home }}/.ssh'
+    state: directory
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 'u=rwx,g=rx,o=r'
+
+- name: Copy authorized_keys file
+  copy:
+    content: '{{ user_authorized_keys }}'
+    dest: '{{ user_home }}/.ssh/authorized_keys'
+    mode: u=rw,g=r,o=r
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+
+# Install dotfiles
+- include: dotfiles.yml
+  when: user_dotfiles
+
+#- name: Install rbenv
+#  git:
+#    repo: https://github.com/rbenv/rbenv.git
+#    dest: '/home/rien/.rbenv'
+
+#- name: Install ruby-build
+#  git:
+#    repo: https://github.com/rbenv/ruby-build.git
+#    dest: '/home/rien/.rbenv/plugins/ruby-build'
+
+#- name: User owns rbenv directory
+#  file:
+#    path: '/home/rien/.rbenv'
+#    owner: rien
+#    group: rien
+#    recurse: yes

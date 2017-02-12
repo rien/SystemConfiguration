@@ -1,0 +1,11 @@
+---
+user_name: rien
+user_comment: Rien Maertens
+user_groups: systemd-journal,lp,sudo,admin,wheel
+user_home: '/home/rien'
+user_authorized_keys: "{{ rien_pubkey }}"
+user_shell: /bin/zsh
+
+user_dotfiles: false
+user_dotfiles_repo: 'git@github.com:R13N/puntbestanden.git'
+
