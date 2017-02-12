@@ -3,7 +3,11 @@
   hosts: gunnar
 
   roles:
-    - common
+    - role: common
+      tags:
+        - common
+        - install
+
 
     - role: authorized_keys
       authorized_keys: "{{ rien_pubkey }}"

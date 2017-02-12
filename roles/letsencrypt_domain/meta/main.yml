@@ -2,3 +2,4 @@
 allow_duplicates: yes
 dependencies:
   - role: letsencrypt_base
+    tags: letsencrypt

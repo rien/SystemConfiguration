@@ -1,0 +1,2 @@
+@{{ mail_domain }} {{ rien_email }}
+@{{ mail_hostname }} {{ rien_email }}

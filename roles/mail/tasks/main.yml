@@ -1,13 +1,18 @@
 ---
-- name: Install postfix, mailx & dovecot
+- name: Install postfix and mailx
   yum:
     name: "{{ item }}"
     state: latest
-  notify: Reload Postfix
+  notify: Reload postfix
   with_items:
-    - dovecot
     - postfix
     - mailx
+
+- name: Give postfix access to letsencrypt certificates
+  user:
+    name: postfix
+    groups: letsencrypt
+    append: yes
 
 - name: Copy postfix config
   template:
@@ -16,25 +21,16 @@
   with_items:
     - postfix/main.cf
     - postfix/master.cf
-  notify: Reload Postfix
+  notify: Reload postfix
 
-- name: Copy dovecot config
+- name: Set virtual mappings
   template:
-    src: dovecot/dovecot.conf
-    dest: /etc/dovecot/dovecot.conf
-  notify: Reload dovecot
+    src: postfix/virtual
+    dest: /etc/postfix/virtual
+  notify: Reload virtual
 
-- name: Set aliases
-  template:
-    src: aliases
-    dest: /etc/aliases
-  notify: Reload aliases
-
-- name: Ensure postfix and dovecot are running
+- name: Ensure postfix is running
   service:
-    name: "{{ item }}"
+    name: postfix
     state: started
     enabled: yes
-  with_items:
-    - postfix
-    - dovecot

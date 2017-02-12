@@ -1,6 +1,8 @@
 ---
 - name: Select distro for installation
   include: "{{ ansible_distribution }}.yml"
+  tags:
+    - install
 
 - name: Generate strong Diffie-Hellman group
   command: /usr/bin/openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
@@ -13,6 +15,18 @@
     state: directory
     owner: http
     group: http
+    recurse: yes
+
+- name: Create letsencrypt group
+  group:
+    name: letsencrypt
+    state: present
+
+- name: Make letsencrypt directory accessible for group
+  file:
+    path: /etc/letsencrypt
+    group: letsencrypt
+    mode: "u=rwx,g=rx,o="
     recurse: yes
 
 - name: Copy systemd unit and timer files

@@ -3,7 +3,11 @@
   command: newaliases
   notify: Reload Postfix
 
-- name: Reload Postfix
+- name: Reload virtual
+  command: postmap /etc/postfix/virtual
+  notify: Reload Postfix
+
+- name: Reload postfix
   service:
     name: postfix
     state: reloaded
