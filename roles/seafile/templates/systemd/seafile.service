@@ -1,0 +1,14 @@
+[Unit]
+Description=Seafile Server
+After=network.target mariadb.service
+
+[Service]
+Type=oneshot
+ExecStart={{ seafile_installation_path }}/seafile-server-latest/seafile.sh start
+ExecStop={{ seafile_installation_path }}/seafile-server-latest/seafile.sh stop
+RemainAfterExit=yes
+User=seafile
+Group=seafile
+
+[Install]
+WantedBy=multi-user.target

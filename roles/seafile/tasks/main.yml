@@ -1,0 +1,78 @@
+---
+- fail:
+    msg: Only for CentOS
+  when: ansible_distro == "CentOS"
+
+- name: Create seafile user
+  user:
+    name: "{{ seafile_user }}"
+    home: "{{ seafile_installation_path }}"
+    system: yes
+    createhome: yes
+
+- name: Install needed packages
+  yum:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - python-setuptools
+    - python-imaging
+    - mysql-python
+    - python-memcached
+    - memcached
+    - python-urllib3
+    - pwgen
+    - curl
+    - openssl
+    - python-ldap
+    - java-1.7.0-openjdk
+    - poppler-utils
+    - libreoffice
+    - python-requests
+    - libreoffice-headless
+    - libreoffice-pyuno
+    - wqy-microhei-fonts
+    - wqy-zenhei-fonts
+    - wqy-unibit-fonts
+
+- name: Copy seafile systemd files
+  template:
+    src: "systemd/{{ item }}"
+    dest: /etc/systemd/system/
+  with_items:
+    - seafile.service
+    - seahub.service
+  register: seafile_units
+
+- name: Restart systemd daemon if needed
+  command: /usr/bin/systemctl daemon-restart
+  when: seafile_units.changed
+
+- name: Copy seafile restart script
+  copy:
+    src: seafile-server-restart
+    dest: /usr/local/sbin/seafile-server-restart
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
+
+- name: Look for seafile installation
+  find:
+    paths: "{{ seafile_installation_dir }}/installed/"
+  register: seafile_installed
+
+- name: Seafile installation (if needed)
+  include: install.yml
+  when: seafile_installed.matched == 0
+
+- name: Start & enable services
+  service:
+    name: "{{ item }}"
+    state: running
+    enabled: yes
+  with_items:
+    - memcached
+    - seafile
+    - seahub

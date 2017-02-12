@@ -1,0 +1,4 @@
+{
+    email: "{{ seafile_admin_email }}",
+    password: "{{ seafile_admin_password }}"
+}

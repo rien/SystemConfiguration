@@ -1,0 +1,6 @@
+#!/bin/bash
+for ACTION in stop start ; do
+    for SERVICE in seafile seahub ; do
+      systemctl ${ACTION} ${SERVICE}
+    done
+done

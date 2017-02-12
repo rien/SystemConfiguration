@@ -1,0 +1,19 @@
+---
+- name: Create installed dir
+  file:
+    path: "{{ seafile_installation_path }}/installed"
+    state: directory
+
+- name: Download server package
+  get_url:
+    url: "{{ seafile_package_url }}"
+    dest: "{{ seafile_installation_path }}/installed/{{ seafile_package_name }}"
+    force: no
+
+- name: Extract server package
+  unarchive:
+    src: "{{ seafile_installation_path }}/installed/{{ seafile_package_name }}"
+    dest: "{{ seafile_installation_path }}/"
+
+
+
