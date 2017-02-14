@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: letsencrypt_domain
+    letsencrypt_domain: "{{ transmission_url }}"
+
+  - role: nginx_vhost
+    nginx_vhost_location: "roles/transmission/templates"
+    nginx_vhost_file: "transmission"

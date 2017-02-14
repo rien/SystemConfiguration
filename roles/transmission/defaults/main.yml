@@ -1,0 +1,5 @@
+---
+transmission_username: transmission
+transmission_password: # secure password
+transmission_download_dir: /srv/transmission/downloaded
+transmission_incomplete_dir: /srv/transmission/incomplete

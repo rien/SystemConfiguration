@@ -27,6 +27,12 @@
     owner: transmission
     group: transmission
 
+- name: Create htpasswd file
+  htpasswd:
+    path: /etc/nginx/transmission_passwd
+    name: "{{ transmission_username }}"
+    password: "{{ transmission_password }}"
+
 - name: Start and enable transmission
   service:
     name: "{{ transmission_service }}"

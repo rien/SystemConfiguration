@@ -6,6 +6,7 @@
     update_cache: yes
   with_items:
     - epel-release
+    - python-passlib
     - transmission-daemon
     - transmission-common
     - transmission-cli
