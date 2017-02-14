@@ -42,6 +42,7 @@
     - role: transmission
       tags:
         - transmission
+      transmission_url: transmission.rxn.be
       transmission_download_dir: /srv/transmission/downloaded
       transmission_incomplete_dir: /srv/transmission/incomplete
       # secret vars: see host_vars/gunnar.yml

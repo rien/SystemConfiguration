@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: letsencrypt_domain
+    letsencrypt_domain: seafile.rxn.be
+
+  - role: nginx_vhost
+    nginx_vhost_file: 'seafile'
+    nginx_vhost_location: 'roles/seafile/templates/nginx'

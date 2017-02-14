@@ -1,7 +1,7 @@
 ---
 - fail:
     msg: Only for CentOS
-  when: ansible_distro == "CentOS"
+  when: not ansible_distribution == "CentOS"
 
 - name: Create seafile user
   user:
@@ -19,7 +19,7 @@
     - epel-release
     - python-setuptools
     - python-imaging
-    - mysql-python
+    - MySQL-python    # no joke, this is case sensitive
     - python-memcached
     - memcached
     - python-urllib3
@@ -36,6 +36,8 @@
     - wqy-microhei-fonts
     - wqy-zenhei-fonts
     - wqy-unibit-fonts
+  tags:
+    - install
 
 - name: Copy seafile systemd files
   template:
@@ -47,7 +49,7 @@
   register: seafile_units
 
 - name: Restart systemd daemon if needed
-  command: /usr/bin/systemctl daemon-restart
+  command: /usr/bin/systemctl daemon-reload
   when: seafile_units.changed
 
 - name: Copy seafile restart script
@@ -58,15 +60,25 @@
     group: root
     mode: "u=rwx,g=,o="
 
+- name: Create seafile directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ seafile_topdir }}"
+    - "{{ seafile_confdir }}"
+    - "{{ seafile_datadir }}"
+
+
 - name: Copy seafile configuration
   template:
     src: settings.py
     dest: "{{ seafile_settings }}"
-  notify: restart seafile
+  notify: Restart seafile
 
 - name: Look for seafile installation
   find:
-    paths: "{{ seafile_installation_dir }}/installed/"
+    paths: "{{ seafile_installation_path }}/installed/"
   register: seafile_installed
 
 - name: Seafile installation (if needed)

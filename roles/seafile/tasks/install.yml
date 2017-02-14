@@ -4,6 +4,9 @@
     path: "{{ seafile_installation_path }}/installed"
     state: directory
 
+- debug:
+    var: seafile_package_url
+
 - name: Download server package
   get_url:
     url: "{{ seafile_package_url }}"
@@ -11,9 +14,7 @@
     force: no
 
 - name: Extract server package
-  unarchive:
-    src: "{{ seafile_installation_path }}/installed/{{ seafile_package_name }}"
-    dest: "{{ seafile_installation_path }}/"
+  command: "tar xvf {{ seafile_installation_path }}/installed/{{ seafile_package_name }} -C {{ seafile_installation_path }}/"
 
 - name: DB user config file
   copy:
@@ -32,7 +33,7 @@
     SEAFILE_DATA_DIR: "{{ seafile_datadir }}"
     DEST_SETTINGS_PY: "{{ seafile_settings }}"
     SQLSEAFILEPW: "{{ seafile_db_pw }}"
-    SQLROOTPW: "{{ mariadb_root_pw }}"
+    SQLROOTPW: "{{ mysql_root_pw }}"
     IP_OR_DOMAIN: "{{ seafile_url }}"
     SEAFILE_ADMIN: "{{ seafile_admin_email }}"
     SEAFILE_ADMIN_PW: "{{ seafile_admin_password }}"
