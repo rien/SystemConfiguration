@@ -58,6 +58,12 @@
     group: root
     mode: "u=rwx,g=,o="
 
+- name: Copy seafile configuration
+  template:
+    src: settings.py
+    dest: "{{ seafile_settings }}"
+  notify: restart seafile
+
 - name: Look for seafile installation
   find:
     paths: "{{ seafile_installation_dir }}/installed/"
@@ -70,7 +76,7 @@
 - name: Start & enable services
   service:
     name: "{{ item }}"
-    state: running
+    state: started
     enabled: yes
   with_items:
     - memcached

@@ -10,5 +10,17 @@ seafile_package_normal_url: https://bintray.com/artifact/download/seafile-org/se
 seafile_package_pro_url: https://download.seafile.com/d/6e5297246c/files/?p=/pro/
 seafile_package_url: "{{ seafile_package_pro_url if seafile_pro else seafile_package_normal_url }}{{ seafile_package_name }}{{ '&dl=1' if seafile_pro }}"
 
-seafile_admin_email: 
+seafile_admin_email: # admin email
 seafile_admin_password: # very secure admin password
+
+seafile_db_pw: # secure database password
+
+
+seafile_topdir: "{{ seafile_installtion_path }}/{{ seafile_package_name }}"
+seafile_confdir: "{{ seafile_topdir }}/conf"
+seafile_datadir: "{{ seafile_topdir }}/seafile-data"
+seafile_settings: "{{ seafile_confdir }}/settings.py"
+
+seafile_timezone: "Europe/Brussels"
+seafile_site_name: "Seafile Server"
+seafile_site_title: "Seafile Server"

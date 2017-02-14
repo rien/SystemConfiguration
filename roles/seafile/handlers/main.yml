@@ -1,0 +1,3 @@
+---
+- name: Restart seafile
+  command: /usr/local/sbin/seafile-server-restart

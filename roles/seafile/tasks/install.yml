@@ -15,5 +15,37 @@
     src: "{{ seafile_installation_path }}/installed/{{ seafile_package_name }}"
     dest: "{{ seafile_installation_path }}/"
 
+- name: DB user config file
+  copy:
+    content: >
+      [client]
+      user={{ seafile_user }}
+      password={{ seafile_db_pw }}
+    dest: "{{ seafile_installation_path }}/.my.cnf"
+    mode: "u=rx,g=,o="
 
+- name: Seafile setup script
+  script: seafile-setup.sh
+  environment:
+    TOPDIR: "{{ seafile_topdir }}"
+    DEFAULT_CONF_DIR: "{{ seafile_confdir }}"
+    SEAFILE_DATA_DIR: "{{ seafile_datadir }}"
+    DEST_SETTINGS_PY: "{{ seafile_settings }}"
+    SQLSEAFILEPW: "{{ seafile_db_pw }}"
+    SQLROOTPW: "{{ mariadb_root_pw }}"
+    IP_OR_DOMAIN: "{{ seafile_url }}"
+    SEAFILE_ADMIN: "{{ seafile_admin_email }}"
+    SEAFILE_ADMIN_PW: "{{ seafile_admin_password }}"
+    IS_PRO: "{{ seafile_pro }}"
+
+- name: Fix permissions
+  file:
+    path: "{{ seafile_installation_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ seafile_user }}"
+    group: "{{ seafile_user }}"
+
+- name: (Re)start server
+  command: /usr/local/sbin/seafile-server-restart
 
