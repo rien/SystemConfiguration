@@ -1,0 +1,6 @@
+---
+- name: Install nginx on Arch
+  pacman:
+    name: nginx-mainline
+    state: latest
+

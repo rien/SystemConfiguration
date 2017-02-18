@@ -33,6 +33,7 @@
         - user
 
     - role: transmission
+      transmission_url: transmission.masjiene.rxn.be
       transmission_download_dir: /srv/transmission/downloaded
       transmission_incomplete_dir: /srv/transmission/incomplete
       # secret vars: see host_vars/masjiene.yml

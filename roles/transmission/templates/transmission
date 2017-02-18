@@ -8,60 +8,63 @@ server {
     include snippets/letsencrypt.conf;
 }
 server {
-      listen 443 ssl http2;
-      server_name {{ transmission_url }};
-      auth_basic            "Server Restricted";
-      auth_basic_user_file  /etc/nginx/transmission_passwd;
-      
-      # Path to the root of your installation
-      error_log /var/log/nginx/transmission.error.log;
-      access_log /var/log/nginx/transmission.access.log;
-      
-      ### SSL cert files ###
-      ssl_certificate /etc/letsencrypt/live/{{ transmission_url }}/fullchain.pem;
-      ssl_certificate_key /etc/letsencrypt/live/{{ transmission_url }}/privkey.pem;
+    listen 443 ssl http2;
+    server_name {{ transmission_url }};
+    auth_basic            "Server Restricted";
+    auth_basic_user_file  /etc/nginx/transmission_passwd;
+
+    error_log /var/log/nginx/transmission.error.log;
+    access_log /var/log/nginx/transmission.access.log;
+
+    ### SSL cert files ###
+    ssl_certificate /etc/letsencrypt/live/{{ transmission_url }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ transmission_url }}/privkey.pem;
 
     include snippets/ssl_options.conf;
     include snippets/letsencrypt.conf;
 
-      location ^~ /transmission {
+    location / {
+        return 301 https://$server_name/transmission/web;
+    }
 
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-NginX-Proxy true;
-          proxy_http_version 1.1;
-          proxy_set_header Connection "";
-          proxy_pass_header X-Transmission-Session-Id;
-          add_header   Front-End-Https   on;
-      
-          location /transmission/rpc {
-              proxy_pass http://transmission;
-          }
-      
-          location /transmission/web/ {
-              proxy_pass http://transmission;
-          }
-      
-          location /transmission/upload {
-              proxy_pass http://transmission;
-          }
-      
-          location /transmission/web/style/ {
-              alias /usr/share/transmission/web/style/;
-          }
-      
-          location /transmission/web/javascript/ {
-              alias /usr/share/transmission/web/javascript/;
-          }
-      
-          location /transmission/web/images/ {
-              alias /usr/share/transmission/web/images/;
-          }
-          
-          location /transmission/ {
-              return 301 https://$server_name/transmission/web;
-          }
-      }
+    location ^~ /transmission {
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_pass_header X-Transmission-Session-Id;
+        add_header   Front-End-Https   on;
+
+        location /transmission/rpc {
+            proxy_pass http://transmission;
+        }
+
+        location /transmission/web/ {
+            proxy_pass http://transmission;
+        }
+
+        location /transmission/upload {
+            proxy_pass http://transmission;
+        }
+
+        location /transmission/web/style/ {
+            alias /usr/share/transmission/web/style/;
+        }
+
+        location /transmission/web/javascript/ {
+            alias /usr/share/transmission/web/javascript/;
+        }
+
+        location /transmission/web/images/ {
+            alias /usr/share/transmission/web/images/;
+        }
+
+        location /transmission/ {
+            return 301 https://$server_name/transmission/web;
+        }
+    }
 
 }

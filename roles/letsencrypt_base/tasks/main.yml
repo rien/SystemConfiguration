@@ -9,7 +9,7 @@
   args:
     creates: "/etc/ssl/certs/dhparam.pem"
 
-- name: Ensure letsencrypt folder exists
+- name: Ensure well-known folder exists
   file:
     name: "/var/lib/letsencrypt/"
     state: directory
@@ -17,14 +17,16 @@
     group: http
     recurse: yes
 
+
 - name: Create letsencrypt group
   group:
     name: letsencrypt
     state: present
 
-- name: Make letsencrypt directory accessible for group
+- name: Create letsencrypt directory and make it accessible for group
   file:
     path: /etc/letsencrypt
+    state: directory
     group: letsencrypt
     mode: "u=rwx,g=rx,o="
     recurse: yes

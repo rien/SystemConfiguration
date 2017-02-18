@@ -5,20 +5,10 @@
     shell: /usr/bin/nologin
     system: yes
 
-- name: Install nginx on Arch
-  pacman:
-    name: nginx-mainline
-    state: latest
-  when: ansible_distribution == "Archlinux"
-
-- name: Install nginx on CentOS
-  yum:
-    name: "{{ item }}"
-    state: latest
-  when: ansible_distribution == "CentOS"
-  with_items:
-    - epel-release
-    - nginx
+- name: Distribution specific installation
+  include: "{{ ansible_distribution }}.yml"
+  tags:
+    - install
 
 - name: Create vhost directories
   file:
