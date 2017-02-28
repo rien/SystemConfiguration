@@ -1,0 +1,19 @@
+---
+- name: Install build dependencies
+  yum:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - gcc-c++
+    - make
+    - curl
+
+- name: Install node repo with script
+  shell: curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+
+- name: Install node itself with yum
+  yum:
+    pkg: nodejs
+    state: latest
+    update_cache: yes
