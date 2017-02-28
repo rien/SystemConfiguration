@@ -6,3 +6,5 @@ dependencies:
   - role: nginx_vhost
     nginx_vhost_file: 'seafile'
     nginx_vhost_location: 'roles/seafile/templates/nginx'
+
+  - role: mariadb

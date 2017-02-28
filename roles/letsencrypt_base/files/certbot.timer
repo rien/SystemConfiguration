@@ -1,9 +1,9 @@
 [Unit]
-Description=Weekly renewal of Let's Encrypt's certificates
+Description=Daily renewal of letsencrypt certificates
 
 [Timer]
-OnCalendar=weekly
-RandomizedDelaySec=1day
+OnUnitActiveSec=12h
+RandomizedDelaySec=12h
 Persistent=true
 
 [Install]

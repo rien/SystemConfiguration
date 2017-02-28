@@ -25,6 +25,10 @@
     dest: "{{ seafile_installation_path }}/.my.cnf"
     mode: "u=rx,g=,o="
 
+
+- fail:
+    msg: "Do your thing"
+
 - name: Seafile setup script
   script: seafile-setup.sh
   environment:

@@ -1,15 +1,22 @@
 ---
 - name: Distro specific installation
-  include: "{{ ansible_distro }}.yml"
+  include: "{{ ansible_distribution }}.yml"
+  tags: install
 
 - name: Check if mariadb is installed yet
   find:
     paths: "/var/lib/mysql"
   register: mysql_dir_contents
 
-- name: Enable and start mysqld service
+- name: Copy system-wide configuration file
+  copy:
+    src: my.cnf
+    dest: /etc/my.cnf
+  notify: Restart mysql
+
+- name: Enable and start mariadb service
   service:
-    name: mysqld
+    name: mariadb
     state: started
     enabled: yes
 
@@ -25,9 +32,4 @@
     owner: root
     group: root
 
-- name: Copy system-wide configuration file
-  copy:
-    src: my.cnf
-    dest: /etc/mysql/my.cnf
-  notify: Restart mysql
 

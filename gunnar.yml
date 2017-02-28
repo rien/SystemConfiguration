@@ -1,5 +1,6 @@
 ---
 - name: CentOS droplet hosted by DigitalOcean.
+  strategy: debug
   hosts: gunnar
 
   roles:

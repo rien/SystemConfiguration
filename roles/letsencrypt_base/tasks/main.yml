@@ -34,7 +34,7 @@
 - name: Copy systemd unit and timer files
   copy:
     src: "{{ item }}"
-    dest: "/usr/lib/systemd/system/{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
   with_items:
     - "certbot.service"
     - "certbot.timer"
