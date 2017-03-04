@@ -1,0 +1,69 @@
+---
+- name: Create lounge user
+  user:
+    name: "{{ thelounge_user }}"
+    createhome: yes
+    home: "{{ thelounge_homedir }}"
+    system: yes
+    shell: /usr/sbin/nologin
+
+- name: Install thelounge with npm
+  npm:
+    name: thelounge
+    global: yes
+    production: yes
+    state: latest
+    path: "{{ thelounge_homedir }}"
+  tags: install
+
+- name: Create config directory & tmp
+  file:
+    path: "{{ thelounge_homedir }}/.lounge/"
+    state: directory
+    owner: "{{ thelounge_user }}"
+    group: "{{ thelounge_user }}"
+
+- name: Create tmp directory
+  file:
+    path: "{{ thelounge_homedir }}/.lounge/"
+    state: directory
+    owner: "{{ thelounge_user }}"
+    group: http
+    mode: 'u=rwx,g=rwx,o='
+
+- name: Give http access to lounge homedir
+  file:
+    path: "{{ thelounge_homedir }}"
+    state: directory
+    owner: "{{ thelounge_user }}"
+    group: http
+    mode: "u=rwx,g=rwx,o="
+
+- name: Copy config file
+  template:
+    src: config.js
+    dest: "{{ thelounge_homedir }}/.lounge/"
+    owner: "{{ thelounge_user }}"
+    group: "{{ thelounge_user }}"
+  notify: Restart thelounge
+
+- name: Copy lounge.service
+  template:
+    src: lounge.service
+    dest: /etc/systemd/system/
+  register: lounge_service
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+  when: lounge_service.changed
+
+- name: Start & enable lounge service
+  service:
+    name: lounge
+    state: started
+    enabled: yes
+
+- debug:
+    msg: "You can now add a user with 'lounge add <user>' as {{ thelounge_user }}"
+
+

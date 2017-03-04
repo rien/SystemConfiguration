@@ -1,0 +1,17 @@
+[Unit]
+Description=TheLounge IRC web client
+After=network.target
+
+[Service]
+Type=simple
+User=lounge
+Group=http
+ExecStart=/bin/lounge start
+WorkingDirectory=/srv/lounge
+NoNewPrivileges=true
+ProtectSystem=full
+TimeoutStartSec=2
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

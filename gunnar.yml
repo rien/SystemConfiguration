@@ -75,6 +75,11 @@
       tags:
         - seafile
 
+    - role: thelounge
+      thelounge_url: lounge.rxn.be
+      thelounge_login_username: rien
+      thelounge_login_hash: $2b$11$2W6aDcJj.OLSxMFrSwPmQuwuhsolFSM4jOzxthLPVOfoVUNaT6xFa
+      tags: thelounge
 
   vars_files:
     - vars/secrets.yml

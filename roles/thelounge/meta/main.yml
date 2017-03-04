@@ -1,0 +1,10 @@
+---
+dependencies:
+  - role: nodejs
+
+  - role: letsencrypt_domain
+    letsencrypt_domain: "{{ thelounge_url }}"
+
+  - role: nginx_vhost
+    nginx_vhost_location: "roles/thelounge/templates"
+    nginx_vhost_file: "lounge"

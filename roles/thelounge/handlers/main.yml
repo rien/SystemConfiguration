@@ -1,0 +1,5 @@
+---
+- name: Reload thelounge
+  service:
+    name: lounge
+    state: restarted
