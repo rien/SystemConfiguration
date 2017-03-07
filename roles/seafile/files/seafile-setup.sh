@@ -64,5 +64,5 @@ mv ${INSTALLPATH}/check_init_admin.py.backup ${INSTALLPATH}/check_init_admin.py
 if ${IS_PRO}; then
     PRO_PY=${INSTALLPATH}/pro/pro.py
     $PYTHON ${PRO_PY} setup --mysql --mysql_host=127.0.0.1 --mysql_port=3306 --mysql_user=seafile --mysql_password=${SQLSEAFILEPW} --mysql_db=seahub_db
-    sed -i 's/enabled = false/enabled = true/' ${TOPDIR}/conf/seafevents.conf
+    sed -i 's/enabled = false/enabled = true/' ${INSTALLPATH}/conf/seafevents.conf
 fi

@@ -1,6 +1,8 @@
 #!/bin/bash
-for ACTION in stop start ; do
-    for SERVICE in seafile seahub ; do
-      systemctl ${ACTION} ${SERVICE}
-    done
-done
+systemctl stop seafile
+sleep 1
+systemctl stop seahub
+sleep 1
+systemctl start seafile
+sleep 1
+systemctl start seahub

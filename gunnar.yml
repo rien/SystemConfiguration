@@ -48,10 +48,6 @@
       transmission_incomplete_dir: /srv/transmission/incomplete
       # secret vars: see host_vars/gunnar.yml
 
-    - role: test_letsencrypt
-      tags:
-        - test
-
     - role: theatervolta
       theatervolta_webroot: /srv/http/volta
       theatervolta_site: theatervolta.be

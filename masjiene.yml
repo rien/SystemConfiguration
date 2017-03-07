@@ -40,5 +40,11 @@
       tags:
         - transmission
 
+    - role: seafile
+      seafile_url: "masjiene.rxn.be"
+      seafile_admin_email: "{{ rien_email }}"
+      tags: seafile
+
+
   vars_files:
     - vars/secrets.yml

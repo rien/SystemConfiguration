@@ -6,6 +6,6 @@ Type=oneshot
 ExecStart=/usr/sbin/nginx -t
 ExecStart=/usr/bin/certbot renew \
             --webroot \
-            --webroot-path \
+            --webroot-path /var/lib/letsencrypt \
             --renew-hook "systemctl reload nginx" \
             --agree-tos

@@ -4,4 +4,5 @@ allow_duplicates: yes
 
 # This role depends on nginx_base, which will only be executed once
 dependencies:
-  - { role: nginx_base }
+  - role: nginx_base
+    tags: nginx

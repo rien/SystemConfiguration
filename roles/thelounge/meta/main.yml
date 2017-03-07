@@ -4,6 +4,7 @@ dependencies:
 
   - role: letsencrypt_domain
     letsencrypt_domain: "{{ thelounge_url }}"
+    tags: letsencrypt
 
   - role: nginx_vhost
     nginx_vhost_location: "roles/thelounge/templates"

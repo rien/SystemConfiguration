@@ -60,22 +60,6 @@
     group: root
     mode: "u=rwx,g=,o="
 
-- name: Create seafile directories
-  file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-    - "{{ seafile_topdir }}"
-    - "{{ seafile_confdir }}"
-    - "{{ seafile_datadir }}"
-
-
-- name: Copy seafile configuration
-  template:
-    src: settings.py
-    dest: "{{ seafile_settings }}"
-  notify: Restart seafile
-
 - name: Look for seafile installation
   find:
     paths: "{{ seafile_installation_path }}/installed/"
@@ -84,6 +68,25 @@
 - name: Seafile installation (if needed)
   include: install.yml
   when: seafile_installed.matched == 0
+
+- name: Copy seafile configuration
+  template:
+    src: settings.py
+    dest: "{{ seafile_settings }}"
+  notify: Restart seafile
+
+- name: Fix seafile permissions
+  file:
+    path: "{{ seafile_installation_path }}"
+    owner: "{{ seafile_user }}"
+    group: "http"
+    state: directory
+    recurse: yes
+
+- name: Give http user permissions
+  file:
+    path: "{{ seafile_installation_path }}"
+    mode: "g+rx"
 
 - name: Start & enable services
   service:

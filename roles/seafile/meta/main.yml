@@ -1,10 +1,11 @@
 ---
 dependencies:
   - role: letsencrypt_domain
-    letsencrypt_domain: seafile.rxn.be
+    letsencrypt_domain: "{{ seafile_url }}"
 
   - role: nginx_vhost
     nginx_vhost_file: 'seafile'
     nginx_vhost_location: 'roles/seafile/templates/nginx'
 
   - role: mariadb
+    tags: mariadb

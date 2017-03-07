@@ -32,4 +32,8 @@
     owner: root
     group: root
 
-
+- name: Enable and start mariadb service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes

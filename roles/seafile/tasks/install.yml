@@ -26,13 +26,14 @@
     mode: "u=rx,g=,o="
 
 
-- fail:
-    msg: "Do your thing"
+  #- fail:
+  #    msg: "Do your thing"
 
 - name: Seafile setup script
   script: seafile-setup.sh
   environment:
-    TOPDIR: "{{ seafile_topdir }}"
+    TOPDIR: "{{ seafile_topdir }}/"
+    INSTALLPATH: "{{ seafile_topdir }}"
     DEFAULT_CONF_DIR: "{{ seafile_confdir }}"
     SEAFILE_DATA_DIR: "{{ seafile_datadir }}"
     DEST_SETTINGS_PY: "{{ seafile_settings }}"
@@ -42,6 +43,8 @@
     SEAFILE_ADMIN: "{{ seafile_admin_email }}"
     SEAFILE_ADMIN_PW: "{{ seafile_admin_password }}"
     IS_PRO: "{{ seafile_pro }}"
+  args:
+    chdir: "{{ seafile_topdir }}"
 
 - name: Fix permissions
   file:
@@ -50,6 +53,14 @@
     recurse: yes
     owner: "{{ seafile_user }}"
     group: "{{ seafile_user }}"
+
+- name: Stop seahub (fixes a bug)
+  command: "{{ seafile_topdir }}/seahub.sh stop"
+
+- name: Remove cache dir
+  file:
+    path: /tmp/seahub_cache
+    state: absent
 
 - name: (Re)start server
   command: /usr/local/sbin/seafile-server-restart
