@@ -45,6 +45,19 @@
       seafile_admin_email: "{{ rien_email }}"
       tags: seafile
 
+    - role: postfix
+      postfix_main_user: rien
+      postfix_aliases:
+        - alias: rien
+          to: "{{ rien_email }}"
+        - alias: bert
+          to: "{{ bert_email }}"
+        - alias: seafile
+          to: root
+      postfix_hostname: masjiene.rxn.be
+      postfix_domain: masjiene.rxn.be
+      tags: postfix
+
 
   vars_files:
     - vars/secrets.yml

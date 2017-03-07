@@ -23,11 +23,11 @@
     - postfix/master.cf
   notify: Reload postfix
 
-- name: Set virtual mappings
+- name: Copy aliases
   template:
-    src: postfix/virtual
-    dest: /etc/postfix/virtual
-  notify: Reload virtual
+    src: aliases
+    dest: /etc/aliases
+  notify: Reload aliases
 
 - name: Ensure postfix is running
   service:

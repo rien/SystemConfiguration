@@ -1,0 +1,10 @@
+---
+- name: Reload aliases
+  command: newaliases
+  notify: Reload postfix
+
+- name: Reload postfix
+  service:
+    name: postfix
+    state: reloaded
+

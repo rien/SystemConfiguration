@@ -1,12 +1,9 @@
-
-virtual_alias_domains = {{ mail_hostname }} {{ mail_domain }}
-virtual_alias_maps = hash:/etc/postfix/virtual
-
+relayhost = smtp.gmail.com
 mailbox_size_limit = 0
 
 # SSL:
-smtpd_tls_cert_file=/etc/letsencrypt/live/{{ mail_hostname }}/fullchain.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/{{ mail_hostname }}/privkey.pem
+smtpd_tls_cert_file=/etc/letsencrypt/live/{{ postfix_hostname }}/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/{{ postfix_hostname }}/privkey.pem
 smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
@@ -87,14 +84,14 @@ mail_owner = postfix
 # from gethostname(). $myhostname is used as a default value for many
 # other configuration parameters.
 #
-myhostname = {{ mail_hostname }}
+myhostname = {{ postfix_hostname }}
 
 # The mydomain parameter specifies the local internet domain name.
 # The default is to use $myhostname minus the first component.
 # $mydomain is used as a default value for many other configuration
 # parameters.
 #
-mydomain = {{ mail_domain }}
+mydomain = {{ postfix_domain }}
 
 # SENDING MAIL
 # 
@@ -216,7 +213,7 @@ mydestination = $myhostname, $mydomain, localhost.localdomain, localhost
 # In the left-hand side, specify a bare username, an @domain.tld
 # wild-card, or specify a user@domain.tld address.
 # 
-local_recipient_maps = unix:passwd.byname $alias_maps
+local_recipient_maps =
 #local_recipient_maps = proxy:unix:passwd.byname $alias_maps
 #local_recipient_maps =
 
