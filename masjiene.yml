@@ -58,6 +58,15 @@
       postfix_domain: masjiene.rxn.be
       tags: postfix
 
+    - role: ufw_rule
+      ufw_ssh_port: 2222
+      ufw_applications:
+        - name: WWW Full
+          rule: allow
+      tags: ufw
+
+
+
 
   vars_files:
     - vars/secrets.yml

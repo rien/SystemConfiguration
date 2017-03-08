@@ -55,15 +55,13 @@
         - theatervolta
         - sites
 
-    - role: mail
-      mail_hostname: gunnar.rxn.be
-      mail_domain: rxn.be
-      mail_main_user: rien
-      mail_root_email: maertensrien@gmail.com
+    - role: postfix
+      postfix_hostname: gunnar.rxn.be
+      postfix_domain: rxn.be
+      postfix_main_user: rien
+      postfix_root_email: maertensrien@gmail.com
       tags:
-        - mail
         - postfix
-        - dovecot
 
     - role: seafile
       seafile_url: seafile.rxn.be
@@ -76,6 +74,13 @@
       thelounge_login_username: rien
       thelounge_login_hash: $2b$11$2W6aDcJj.OLSxMFrSwPmQuwuhsolFSM4jOzxthLPVOfoVUNaT6xFa
       tags: thelounge
+
+    - role: ufw_rule
+      ufw_ssh_port: 9450
+      ufw_applications:
+        - name: WWW Full
+          rule: allow
+      tags: ufw
 
   vars_files:
     - vars/secrets.yml
