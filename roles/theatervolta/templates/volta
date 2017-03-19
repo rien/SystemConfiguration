@@ -5,4 +5,20 @@ server {
     access_log /var/log/nginx/volta-access.log main;
     root {{ theatervolta_webroot }};
 
+    include snippets/letsencrypt.conf;
+}
+
+server {
+    listen 443 ssl http2;
+
+    server_name {{ theatervolta_site }} www.{{ theatervolta_site }};
+    access_log /var/log/nginx/volta-access.log main;
+    root {{ theatervolta_webroot }};
+
+    ### SSL cert files ###
+    ssl_certificate /etc/letsencrypt/live/{{ theatervolta_site }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ theatervolta_site }}/privkey.pem;
+
+    include snippets/ssl_options.conf;
+    include snippets/letsencrypt.conf;
 }

@@ -16,11 +16,15 @@
   when: nginx_installed.rc == 0
 
 - name: Request letsencrypt certificate
-  command: 'certbot certonly -tn
+  command: "certbot certonly -tn
     --agree-tos
     --email {{ letsencrypt_email }}
     --standalone
-    --domain {{ letsencrypt_domain }}'
+    --cert-name {{ letsencrypt_domain }}
+    --domain {{ letsencrypt_domain }}
+    {% for domain in letsencrypt_extra_domains %}
+    --domain {{ domain }}
+    {% endfor %}"
   register: request
   ignore_errors: true # We'll handle failure next, first start nginx again
 

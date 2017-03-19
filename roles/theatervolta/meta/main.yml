@@ -3,3 +3,6 @@ dependencies:
   - role: nginx_vhost
     nginx_vhost_file: 'volta'
     nginx_vhost_location: 'roles/theatervolta/templates'
+
+  - role: letsencrypt_domain
+    letsencrypt_domain: 'theatervolta.be'
