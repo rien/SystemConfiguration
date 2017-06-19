@@ -2,6 +2,7 @@
 Description=Daily renewal of letsencrypt certificates
 
 [Timer]
+OnBootSec=30s
 OnUnitActiveSec=12h
 RandomizedDelaySec=12h
 Persistent=true

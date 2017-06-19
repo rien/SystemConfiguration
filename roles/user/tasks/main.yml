@@ -20,7 +20,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
-    mode: "u=rwx,g=rx,o="
+    mode: "u=rwx,g=,o="
   with_items:
     - "{{ user_home }}"
     - "{{ user_home }}/.ssh"

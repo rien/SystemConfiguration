@@ -30,11 +30,6 @@
       tags:
         - user
 
-    - role: ebooks
-      tags:
-        - ebooks
-        - sites
-
     - role: screenshots
       tags:
         - screenshots
@@ -62,12 +57,6 @@
       postfix_root_email: maertensrien@gmail.com
       tags:
         - postfix
-
-    - role: seafile
-      seafile_url: seafile.rxn.be
-      seafile_admin_email: "{{ rien_email }}"
-      tags:
-        - seafile
 
     - role: thelounge
       thelounge_url: lounge.rxn.be
