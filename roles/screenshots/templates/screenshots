@@ -2,11 +2,11 @@ server {
     listen 80;
     listen 443 ssl;
 
-    server_name i.rxn.be;
+    server_name {{ screenshots_domain }};
     root /srv/http/screenshots;
 
-    ssl_certificate /etc/letsencrypt/live/i.rxn.be/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/i.rxn.be/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/{{ screenshots_domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ screenshots_domain }}/privkey.pem;
 
     include snippets/ssl_options.conf;
     include snippets/letsencrypt.conf;

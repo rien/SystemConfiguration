@@ -5,7 +5,7 @@
     home: /srv/http/screenshots
     system: yes
     shell: /bin/sh
-    comment: Host screenshots at i.rxn.be
+    comment: Host screenshots
 
 - name: Create directory for screenshots
   file:

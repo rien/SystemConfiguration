@@ -1,9 +1,12 @@
-[arch]
+[Arch]
 localhost ansible_connection=local
 
-[centOS]
+[Debian]
+vortex ansible_port=9450 ansible_host=vortex.rxn.be ansible_user=root
+
+[CentOS]
 gunnar ansible_port=9450 ansible_host=gunnar.rxn.be ansible_user=root
 masjiene ansible_port=2222 ansible_host=masjiene.rxn.be ansible_user=root
 
-[arch:vars]
+[Arch:vars]
 ansible_python_interpreter=/bin/python2

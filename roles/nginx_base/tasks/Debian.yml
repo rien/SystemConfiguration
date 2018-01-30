@@ -1,0 +1,9 @@
+---
+- name: Install nginx on Debian
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - nginx
+

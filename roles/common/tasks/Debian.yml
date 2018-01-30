@@ -1,0 +1,35 @@
+---
+- name: Install essential packages.
+  apt:
+    name: "{{ item }}"
+    state: installed
+  update_cache: yes
+  with_items:
+    - bc
+    - dos2unix
+    - git
+    - hdparm
+    - htop
+    - httpie
+    - lsof
+    - neovim
+    - nmap
+    - openssh
+    - openssl
+    - python3
+    - python3-pip
+    - python3-venv
+    - python3-neovim
+    - smartmontools
+    - speedtest-cli
+    - tmux
+    - tree
+    - unzip
+    - vpnc
+    - zsh
+
+- name: Symlink neovim to vim
+  file: src=/bin/nvim dest=/bin/vim state=link
+
+- name: Enable NTP
+  command: "/usr/bin/timedatectl set-ntp true"

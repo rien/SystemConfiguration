@@ -1,12 +1,11 @@
 ---
 dependencies:
-
   - role: letsencrypt_domain
-    letsencrypt_domain: 'i.rxn.be'
+    letsencrypt_domain: "{{ screenshots_domain }}"
 
   - role: nginx_vhost
     nginx_vhost_file: 'screenshots'
-    nginx_vhost_location: 'roles/screenshots/files'
+    nginx_vhost_location: 'roles/screenshots/templates'
 
   - role: authorized_keys
     authorized_keys_users:

@@ -5,6 +5,5 @@ user_groups: # comma-separated list (without spaces) with all the groups
 user_home: "/home/{{ user_name }}" # homedir
 user_authorized_keys: "" # user's public key
 user_shell: /bin/bash
-user_dotfiles: false
-user_dotfiles_repo: # github repo of the user's dotfiles
+user_dotfiles_setup_script: # url to the installation script of the user's dotfiles
 

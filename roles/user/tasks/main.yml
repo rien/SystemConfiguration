@@ -34,22 +34,7 @@
     group: '{{ user_name }}'
 
 # Install dotfiles
-- include: dotfiles.yml
-  when: user_dotfiles
+- name: Download and run dotfiles setup script
+  command: "/bin/bash <(/bin/curl -sS {{ user_dotfiles_setup_script_url }})"
+  when: user_dotfiles_setup_script_url is defined
 
-#- name: Install rbenv
-#  git:
-#    repo: https://github.com/rbenv/rbenv.git
-#    dest: '/home/rien/.rbenv'
-
-#- name: Install ruby-build
-#  git:
-#    repo: https://github.com/rbenv/ruby-build.git
-#    dest: '/home/rien/.rbenv/plugins/ruby-build'
-
-#- name: User owns rbenv directory
-#  file:
-#    path: '/home/rien/.rbenv'
-#    owner: rien
-#    group: rien
-#    recurse: yes

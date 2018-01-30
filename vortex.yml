@@ -1,0 +1,68 @@
+---
+- name: Cloud sever running Debian 9
+  strategy: debug
+  hosts: vortex
+
+  roles:
+    - role: common
+      tags:
+        - common
+        - install
+
+
+    - role: authorized_keys
+      authorized_keys: "{{ rien_pubkey }}"
+      authorized_keys_users:
+        - name: root
+          home: /root
+      tags:
+        - authorized_keys
+
+    - role: user
+      user_name: rien
+      user_comment: Rien Maertens
+      user_groups: systemd-journal,lp,sudo,admin,wheel
+      user_home: '/home/rien'
+      user_authorized_keys: "{{ rien_pubkey }}"
+      user_shell: /bin/zsh
+      user_dotfiles_setup_script_url: 'https://github.com/rien/puntbestanden/blob/master/setup_dotfiles.sh'
+      tags:
+        - user
+
+    - role: screenshots
+      tags:
+        - screenshots
+        - sites
+
+    - role: transmission
+      tags:
+        - transmission
+      transmission_url: transmission.rxn.be
+      transmission_download_dir: /srv/transmission/downloaded
+      transmission_incomplete_dir: /srv/transmission/incomplete
+      # secret vars: see host_vars/gunnar.yml
+
+    - role: theatervolta
+      theatervolta_webroot: /srv/http/volta
+      theatervolta_site: theatervolta.be
+      tags:
+        - theatervolta
+        - sites
+
+    - role: postfix
+      postfix_hostname: gunnar.rxn.be
+      postfix_domain: rxn.be
+      postfix_main_user: rien
+      postfix_root_email: maertensrien@gmail.com
+      tags:
+        - postfix
+
+    - role: ufw_rule
+      ufw_ssh_port: 9450
+      ufw_applications:
+        - name: WWW Full
+          rule: allow
+      tags: ufw
+
+  vars_files:
+    - vars/secrets.yml
